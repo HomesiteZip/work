@@ -92,9 +92,9 @@ function loadProjects() {
   } else {
     // 최초 접속 시 보여줄 기본 목업 데이터 연동
     projects = [
-      { id:1, title:"브랜드 아이덴티티 프로젝트", category: ["GRAPHIC", "EDITORIAL"], thumbnail:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", date:"2024.03", year:"2024",
+      { id:1, title:"브랜드 아이덴티티 프로젝트", category: ["GRAPHIC", "EDITORIAL"], thumbnail:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", date:"2024", year:"2024",
         content:[ {type:"text",value:"클라이언트의 브랜드 정체성을 재정립하는 프로젝트였습니다."}, {type:"image",value:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80",caption:"메인 로고 디자인"} ] },
-      { id:2, title:"모바일 앱 UI/UX 디자인", category: ["WEB DESIGN"], thumbnail:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80", date:"2024.01", year:"2024",
+      { id:2, title:"모바일 앱 UI/UX 디자인", category: ["WEB DESIGN"], thumbnail:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80", date:"2024", year:"2024",
         content:[ {type:"text",value:"헬스케어 스타트업의 모바일 앱 전체 UI/UX를 담당했습니다."} ] }
     ];
     saveProjects();
@@ -125,13 +125,14 @@ function renderList() {
 
 function newProject() {
   const id = Date.now();
+  const yearStr = new Date().getFullYear().toString();
   const p = {
     id,
     title: '새 프로젝트',
     category: ['GRAPHIC'],
     thumbnail: '',
-    date: new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit'}).replace('. ','.').replace('.',''),
-    year: new Date().getFullYear().toString(),
+    date: yearStr,
+    year: yearStr,
     content: []
   };
   projects.unshift(p);
@@ -174,12 +175,14 @@ function editProject(id) {
 
       <div class="form-row two-col">
         <div class="form-group">
-          <label>날짜 (예: 2024.03)</label>
+          <label>연도</label>
           <input type="text" id="eDate" value="${p.date}">
         </div>
         <div class="form-group">
-          <label>썸네일 이미지 URL</label>
-          <input type="text" id="eThumbnail" value="${p.thumbnail}" placeholder="https://...">
+          <label>썸네일 이미지 첨부</label>
+          <input type="file" accept="image/*" onchange="handleThumbnailUpload(event)" style="padding: 8px 12px; cursor: pointer;">
+          <input type="hidden" id="eThumbnail" value="${p.thumbnail}">
+          <img id="thumbnailPreview" src="${p.thumbnail}" style="max-width: 100%; max-height: 140px; margin-top: 10px; border-radius: var(--radius); object-fit: cover; display: ${p.thumbnail ? 'block' : 'none'};">
         </div>
       </div>
 
@@ -199,6 +202,45 @@ function editProject(id) {
   `;
 }
 
+function handleThumbnailUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Image = e.target.result;
+    document.getElementById('eThumbnail').value = base64Image;
+    const preview = document.getElementById('thumbnailPreview');
+    preview.src = base64Image;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function handleBlockImageUpload(event, idx) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Image = e.target.result;
+    // 숨겨진 input 업데이트
+    const input = document.getElementById(`block_${idx}`);
+    if (input) input.value = base64Image;
+    
+    // 미리보기 이미지 업데이트
+    const preview = document.getElementById(`block_preview_${idx}`);
+    if (preview) {
+      preview.src = base64Image;
+      preview.style.display = 'block';
+    }
+    
+    // 데이터 반영
+    updateBlock(idx, 'image_url', base64Image);
+  };
+  reader.readAsDataURL(file);
+}
+
 function renderBlock(block, idx) {
   if (block.type === 'text') return `
     <div class="block-item" data-idx="${idx}" data-type="text">
@@ -211,14 +253,12 @@ function renderBlock(block, idx) {
   if (block.type === 'image') return `
     <div class="block-item" data-idx="${idx}" data-type="image">
       <div class="block-handle">
-        <span class="block-label">이미지</span>
+        <span class="block-label">이미지 첨부</span>
         <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
       </div>
-      <input type="text" id="block_${idx}" placeholder="이미지 URL" value="${block.value}"
-             oninput="updateBlock(${idx},'image_url',this.value)">
-      <input type="text" id="block_cap_${idx}" placeholder="캡션 (선택)" value="${block.caption||''}"
-             oninput="updateBlock(${idx},'caption',this.value)" style="margin-top:6px;">
-      ${block.value ? `<img src="${block.value}" class="block-preview" onerror="this.style.display='none'">` : ''}
+      <input type="file" accept="image/*" onchange="handleBlockImageUpload(event, ${idx})" style="padding: 8px 12px; cursor: pointer; width: 100%;">
+      <input type="hidden" id="block_${idx}" value="${block.value}">
+      <img id="block_preview_${idx}" src="${block.value}" class="block-preview" style="display: ${block.value ? 'block' : 'none'};">
     </div>`;
   return '';
 }
@@ -227,7 +267,7 @@ function addBlock(type) {
   const p = projects.find(x => x.id === editingId);
   if (!p) return;
   if (type === 'text') p.content.push({ type: 'text', value: '' });
-  if (type === 'image') p.content.push({ type: 'image', value: '', caption: '' });
+  if (type === 'image') p.content.push({ type: 'image', value: '' }); // 캡션 삭제
   saveProjects();
   editProject(editingId);
 }
@@ -245,7 +285,6 @@ function updateBlock(idx, field, value) {
   if (!p || !p.content[idx]) return;
   if (field === 'text') p.content[idx].value = value;
   if (field === 'image_url') p.content[idx].value = value;
-  if (field === 'caption') p.content[idx].caption = value;
 }
 
 function saveProject() {
