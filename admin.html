@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Portfolio CMS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+
+<!-- 로그인 화면 -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-box">
+    <h1>관리자 로그인</h1>
+    <div class="form-group">
+      <label for="adminPw">비밀번호</label>
+      <input type="password" id="adminPw" placeholder="비밀번호 입력"
+             onkeydown="if(event.key==='Enter') login()">
+    </div>
+    <button onclick="login()" class="submit-btn" style="width:100%;margin-top:8px;">로그인</button>
+    <p id="loginError" class="error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</p>
+  </div>
+</div>
+
+<!-- 관리자 대시보드 -->
+<div id="adminPanel" style="display:none;">
+
+  <header class="admin-header">
+    <span class="logo">CMS 관리자</span>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <a href="index.html" target="_blank" class="preview-link">사이트 미리보기 →</a>
+      <button onclick="logout()" class="logout-btn">로그아웃</button>
+    </div>
+  </header>
+
+  <div class="admin-layout">
+
+    <!-- 프로젝트 목록 -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <h2>프로젝트</h2>
+        <button onclick="newProject()" class="add-btn">+ 추가</button>
+      </div>
+      <ul id="projectList" class="project-list"></ul>
+    </aside>
+
+    <!-- 편집 영역 -->
+    <div class="admin-editor" id="editorArea">
+      <div class="editor-empty">
+        <p>왼쪽에서 프로젝트를 선택하거나<br>새 프로젝트를 추가하세요.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ───────────────────────────────────────────────
+// 관리자 비밀번호 설정
+// 이 값을 본인만 아는 비밀번호로 변경하세요
+// ───────────────────────────────────────────────
+const ADMIN_PASSWORD = 'your_password_here';
+
+let projects = [];
+let editingId = null;
+let blockCounter = 0;
+
+// 로그인
+function login() {
+  const pw = document.getElementById('adminPw').value;
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('admin_auth', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadProjects();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('admin_auth');
+  location.reload();
+}
+
+// 페이지 로드 시 로그인 체크
+if (sessionStorage.getItem('admin_auth') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+}
+
+function loadProjects() {
+  const saved = localStorage.getItem('portfolio_projects');
+  projects = saved ? JSON.parse(saved) : [];
+  renderList();
+}
+
+function saveProjects() {
+  localStorage.setItem('portfolio_projects', JSON.stringify(projects));
+}
+
+function renderList() {
+  const list = document.getElementById('projectList');
+  list.innerHTML = projects.map(p => `
+    <li class="project-item ${editingId === p.id ? 'active' : ''}" onclick="editProject(${p.id})">
+      <div class="project-item-thumb">
+        <img src="${p.thumbnail}" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="project-item-info">
+        <strong>${p.title}</strong>
+        <span>${p.category} · ${p.date}</span>
+      </div>
+    </li>
+  `).join('');
+}
+
+function newProject() {
+  const id = Date.now();
+  const p = {
+    id,
+    title: '새 프로젝트',
+    category: 'Branding',
+    thumbnail: '',
+    date: new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit'}).replace('. ','.').replace('.',''),
+    content: []
+  };
+  projects.unshift(p);
+  saveProjects();
+  renderList();
+  editProject(id);
+}
+
+function editProject(id) {
+  editingId = id;
+  renderList();
+  const p = projects.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('editorArea').innerHTML = `
+    <div class="editor-form">
+      <div class="editor-topbar">
+        <h2>프로젝트 편집</h2>
+        <div style="display:flex;gap:8px;">
+          <button onclick="saveProject()" class="save-btn">저장</button>
+          <button onclick="deleteProject(${id})" class="delete-btn">삭제</button>
+        </div>
+      </div>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label>제목</label>
+          <input type="text" id="eTitle" value="${p.title}">
+        </div>
+        <div class="form-group">
+          <label>카테고리</label>
+          <select id="eCategory">
+            ${['Branding','UI/UX','Packaging','Web Design','Typography','Print','Illustration','Motion','Photography','Other']
+              .map(c => `<option ${p.category===c?'selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label>날짜 (예: 2024.03)</label>
+          <input type="text" id="eDate" value="${p.date}">
+        </div>
+        <div class="form-group">
+          <label>썸네일 이미지 URL</label>
+          <input type="text" id="eThumbnail" value="${p.thumbnail}" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="content-editor">
+        <div class="content-editor-header">
+          <label>상세 콘텐츠 블록</label>
+          <div style="display:flex;gap:8px;">
+            <button onclick="addBlock('text')" class="add-block-btn">+ 텍스트</button>
+            <button onclick="addBlock('image')" class="add-block-btn">+ 이미지</button>
+          </div>
+        </div>
+        <div id="blocksContainer">
+          ${p.content.map((b,i) => renderBlock(b,i)).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  blockCounter = p.content.length;
+}
+
+function renderBlock(block, idx) {
+  if (block.type === 'text') return `
+    <div class="block-item" data-idx="${idx}" data-type="text">
+      <div class="block-handle">
+        <span class="block-label">텍스트</span>
+        <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
+      </div>
+      <textarea rows="4" id="block_${idx}" oninput="updateBlock(${idx},'text',this.value)">${block.value}</textarea>
+    </div>`;
+  if (block.type === 'image') return `
+    <div class="block-item" data-idx="${idx}" data-type="image">
+      <div class="block-handle">
+        <span class="block-label">이미지</span>
+        <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
+      </div>
+      <input type="text" id="block_${idx}" placeholder="이미지 URL" value="${block.value}"
+             oninput="updateBlock(${idx},'image_url',this.value)">
+      <input type="text" id="block_cap_${idx}" placeholder="캡션 (선택)" value="${block.caption||''}"
+             oninput="updateBlock(${idx},'caption',this.value)" style="margin-top:6px;">
+      ${block.value ? `<img src="${block.value}" class="block-preview" onerror="this.style.display='none'">` : ''}
+    </div>`;
+  return '';
+}
+
+function addBlock(type) {
+  const p = projects.find(x => x.id === editingId);
+  if (!p) return;
+  if (type === 'text') p.content.push({ type: 'text', value: '' });
+  if (type === 'image') p.content.push({ type: 'image', value: '', caption: '' });
+  saveProjects();
+  editProject(editingId);
+}
+
+function removeBlock(idx) {
+  const p = projects.find(x => x.id === editingId);
+  if (!p) return;
+  p.content.splice(idx, 1);
+  saveProjects();
+  editProject(editingId);
+}
+
+function updateBlock(idx, field, value) {
+  const p = projects.find(x => x.id === editingId);
+  if (!p || !p.content[idx]) return;
+  if (field === 'text') p.content[idx].value = value;
+  if (field === 'image_url') p.content[idx].value = value;
+  if (field === 'caption') p.content[idx].caption = value;
+}
+
+function saveProject() {
+  const p = projects.find(x => x.id === editingId);
+  if (!p) return;
+  p.title     = document.getElementById('eTitle').value;
+  p.category  = document.getElementById('eCategory').value;
+  p.date      = document.getElementById('eDate').value;
+  p.thumbnail = document.getElementById('eThumbnail').value;
+  saveProjects();
+  renderList();
+
+  const btn = document.querySelector('.save-btn');
+  btn.textContent = '저장됨 ✓';
+  btn.style.background = '#22c55e';
+  btn.style.color = '#fff';
+  setTimeout(() => { btn.textContent = '저장'; btn.style.background = ''; btn.style.color = ''; }, 1500);
+}
+
+function deleteProject(id) {
+  if (!confirm('이 프로젝트를 삭제할까요?')) return;
+  projects = projects.filter(p => p.id !== id);
+  saveProjects();
+  editingId = null;
+  renderList();
+  document.getElementById('editorArea').innerHTML = `<div class="editor-empty"><p>프로젝트를 선택하거나 추가하세요.</p></div>`;
+}
+
+// 초기 로드
+if (sessionStorage.getItem('admin_auth') === '1') loadProjects();
+</script>
+</body>
+</html>

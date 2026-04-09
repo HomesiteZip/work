@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Studio Zip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- 상단 헤더 (스크롤 시 같이 내려옴 = sticky) -->
+<header id="siteHeader">
+  <nav>
+    <a href="index.html" class="logo">STUDIO ZIP</a>
+    <div class="nav-links">
+      <a href="contact.html">CONTACT</a>
+    </div>
+  </nav>
+</header>
+
+<!-- 필터 바 (fixed, 그자리 고정) -->
+<div class="filter-bar" id="filterBar">
+  <div class="filter-inner">
+    <div class="filter-group">
+      <label>CATEGORY</label>
+      <select id="filterCategory" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="Branding">Branding</option>
+        <option value="UI/UX">UI/UX</option>
+        <option value="Packaging">Packaging</option>
+        <option value="Web Design">Web Design</option>
+        <option value="Typography">Typography</option>
+        <option value="Print">Print</option>
+        <option value="Illustration">Illustration</option>
+        <option value="Motion">Motion</option>
+        <option value="Photography">Photography</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="filter-right">
+      <div class="filter-group">
+        <label>YEAR</label>
+        <select id="filterYear" onchange="applyFilters()">
+          <option value="">All</option>
+          <option value="before2017">Before 2017</option>
+          <option value="2017">2017</option>
+          <option value="2018">2018</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+      </div>
+      <button class="filter-reset" onclick="resetFilters()">
+        RESET
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 갤러리 -->
+<main id="galleryMain">
+  <div class="gallery-grid" id="galleryGrid"></div>
+  <div class="no-results" id="noResults" style="display:none;">
+    <p>해당하는 작업물이 없습니다.</p>
+  </div>
+</main>
+
+<!-- 상세 페이지 (데스크탑: 슬라이드인 / 모바일: 새 페이지처럼) -->
+<div class="detail-page" id="detailPage">
+  <div class="detail-content" id="detailContent"></div>
+</div>
+
+<script>
+function getProjects() {
+  const saved = localStorage.getItem('portfolio_projects');
+  if (saved) return JSON.parse(saved);
+  return [
+    { id:1, title:"브랜드 아이덴티티 프로젝트", category:"Branding", thumbnail:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", date:"2024.03", year:"2024",
+      content:[ {type:"text",value:"클라이언트의 브랜드 정체성을 재정립하는 프로젝트였습니다. 로고, 컬러 시스템, 타이포그래피를 포함한 전체적인 비주얼 아이덴티티를 디자인했습니다. 브랜드 컬러는 신뢰감과 전문성을 강조하는 딥 네이비와 골드 조합을 채택했으며, 모든 터치포인트에서 일관된 경험을 제공하도록 설계되었습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80",caption:"메인 로고 디자인"},
+        {type:"image",value:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80",caption:"브랜드 컬러 시스템"} ] },
+    { id:2, title:"모바일 앱 UI/UX 디자인", category:"UI/UX", thumbnail:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80", date:"2024.01", year:"2024",
+      content:[ {type:"text",value:"헬스케어 스타트업의 모바일 앱 전체 UI/UX를 담당했습니다. 사용자 리서치부터 프로토타이핑까지 전 과정을 진행했습니다. 핵심 목표는 복잡한 의료 정보를 직관적으로 표현하는 것이었습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80",caption:"앱 메인 화면"} ] },
+    { id:3, title:"패키지 디자인", category:"Packaging", thumbnail:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80", date:"2023.11", year:"2023",
+      content:[ {type:"text",value:"친환경 뷰티 브랜드의 패키지 라인업 전체를 디자인했습니다. 지속가능성과 프리미엄 감성을 동시에 담아내는 것이 핵심 챌린지였습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80",caption:"패키지 라인업"} ] },
+    { id:4, title:"웹사이트 리디자인", category:"Web Design", thumbnail:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80", date:"2023.09", year:"2023",
+      content:[ {type:"text",value:"레거시 기업의 웹사이트를 현대적으로 리디자인하는 프로젝트입니다. 브랜드의 전통성을 유지하면서도 디지털 환경에 맞는 UX를 구현했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80",caption:"리디자인 메인 페이지"} ] },
+    { id:5, title:"포스터 캠페인", category:"Print", thumbnail:"https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80", date:"2022.07", year:"2022",
+      content:[ {type:"text",value:"문화 기관의 연간 전시 포스터 시리즈를 제작했습니다. 각 전시의 특성을 시각적으로 표현하면서도 브랜드 통일성을 유지했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80",caption:"포스터 시리즈"} ] },
+    { id:6, title:"타이포그래피 실험", category:"Typography", thumbnail:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80", date:"2016.05", year:"before2017",
+      content:[ {type:"text",value:"개인 프로젝트로 진행한 타이포그래피 실험 시리즈입니다. 한글과 영문을 함께 사용하는 독자적인 레이아웃 시스템을 탐구했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80",caption:"타이포그래피 실험 작품"} ] }
+  ];
+}
+
+const allProjects = getProjects();
+
+function renderGallery(projects) {
+  const grid = document.getElementById('galleryGrid');
+  const noResults = document.getElementById('noResults');
+  if (!projects.length) { grid.innerHTML=''; noResults.style.display='flex'; return; }
+  noResults.style.display = 'none';
+  grid.innerHTML = projects.map(p => `
+    <div class="gallery-item" onclick="openDetail(${p.id})">
+      <div class="gallery-thumb">
+        <img src="${p.thumbnail}" alt="${p.title}" loading="lazy">
+      </div>
+      <div class="gallery-label">
+        <span class="gallery-title-text">${p.title}</span>
+        <span class="gallery-cat-tag">${p.category}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function applyFilters() {
+  const year = document.getElementById('filterYear').value;
+  const cat  = document.getElementById('filterCategory').value;
+  let f = allProjects;
+  if (year) f = f.filter(p => p.year === year);
+  if (cat)  f = f.filter(p => p.category === cat);
+  renderGallery(f);
+}
+
+function resetFilters() {
+  document.getElementById('filterYear').value = '';
+  document.getElementById('filterCategory').value = '';
+  renderGallery(allProjects);
+}
+
+function isMobile() { return window.innerWidth <= 768; }
+
+function buildDetailHTML(p) {
+  // 텍스트 블록들 합치기 (상단에만)
+  const texts = p.content.filter(b => b.type === 'text').map(b => `<p class="detail-text">${b.value}</p>`).join('');
+  const images = p.content.filter(b => b.type === 'image').map(b =>
+    `<figure class="detail-figure"><img src="${b.value}" alt="${b.caption||''}"><figcaption>${b.caption||''}</figcaption></figure>`
+  ).join('');
+
+  return `
+    <div class="detail-header">
+      <h1>${p.title}</h1>
+      <div class="detail-meta-right">
+        <span class="detail-cat">${p.category}</span>
+        <span class="detail-date">${p.date}</span>
+      </div>
+    </div>
+    <div class="detail-body">
+      ${texts ? `<div class="detail-texts">${texts}</div>` : ''}
+      <div class="detail-images">${images}</div>
+    </div>
+  `;
+}
+
+function openDetail(id) {
+  const p = allProjects.find(x => x.id === id);
+  if (!p) return;
+
+  const html = buildDetailHTML(p);
+
+  if (isMobile()) {
+    // 모바일: 상세페이지를 body에 직접 표시 (transform 없이 즉시)
+    const dp = document.getElementById('detailPage');
+    document.getElementById('detailContent').innerHTML = html;
+    dp.classList.add('active', 'mobile-mode');
+    dp.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  } else {
+    // 데스크탑: 슬라이드인
+    const dp = document.getElementById('detailPage');
+    document.getElementById('detailContent').innerHTML = html;
+    dp.classList.remove('mobile-mode');
+    dp.classList.add('active');
+    dp.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeDetail() {
+  const dp = document.getElementById('detailPage');
+  dp.classList.remove('active', 'mobile-mode');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeDetail(); });
+renderGallery(allProjects);
+</script>
+</body>
+</html>
