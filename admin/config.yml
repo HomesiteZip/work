@@ -1,15 +1,15 @@
 backend:
   name: github
   repo: homesitezip/work
-  branch: main # 혹은 master
+  branch: main
 
-media_folder: "assets/images/portfolio" # 이미지가 업로드될 경로
-public_folder: "/assets/images/portfolio"
+media_folder: "assets/images/portfolio" # 깃허브 저장소 내 실제 폴더 위치
+public_folder: "/work/assets/images/portfolio" # 웹상에서 보여질 주소 (work 추가)
 
 collections:
   - name: "portfolio"
     label: "포트폴리오"
-    folder: "_portfolio" # 작품 설명(글)이 저장될 폴더
+    folder: "_portfolio"
     create: true
     fields:
       - { label: "제목", name: "title", widget: "string" }
