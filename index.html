@@ -3,162 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Studio Zip</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<title>Studio Zip Portfolio</title>
+<link href="[https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css](https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css)" rel="stylesheet">
+<!-- 분리된 style.css 파일을 불러옵니다 -->
 <link rel="stylesheet" href="style.css">
+<script src="[https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js](https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js)"></script>
 </head>
 <body>
 
-<!-- 상단 헤더 (스크롤 시 같이 내려옴 = sticky) -->
-<header id="siteHeader">
-  <nav>
-    <a href="index.html" class="logo">STUDIO ZIP</a>
-    <div class="nav-links">
-      <a href="contact.html">CONTACT</a>
-    </div>
-  </nav>
-</header>
-
-<!-- 필터 바 (fixed, 그자리 고정) -->
-<div class="filter-bar" id="filterBar">
-  <div class="filter-inner">
-    <div class="filter-group">
-      <label>CATEGORY</label>
-      <select id="filterCategory" onchange="applyFilters()">
-        <option value="">All</option>
-        <option value="Branding">Branding</option>
-        <option value="UI/UX">UI/UX</option>
-        <option value="Packaging">Packaging</option>
-        <option value="Web Design">Web Design</option>
-        <option value="Typography">Typography</option>
-        <option value="Print">Print</option>
-        <option value="Illustration">Illustration</option>
-        <option value="Motion">Motion</option>
-        <option value="Photography">Photography</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-
-    <div class="filter-right">
-      <div class="filter-group">
-        <label>YEAR</label>
-        <select id="filterYear" onchange="applyFilters()">
-          <option value="">All</option>
-          <option value="before2017">Before 2017</option>
-          <option value="2017">2017</option>
-          <option value="2018">2018</option>
-          <option value="2019">2019</option>
-          <option value="2020">2020</option>
-          <option value="2021">2021</option>
-          <option value="2022">2022</option>
-          <option value="2023">2023</option>
-          <option value="2024">2024</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
-        </select>
+<!-- ================= INDEX VIEW ================= -->
+<div id="view-index" class="view-container active">
+  <header id="siteHeader">
+    <nav>
+      <a href="#" onclick="switchView('index'); return false;" class="logo">STUDIO ZIP</a>
+      <div class="nav-links">
+        <a href="#" onclick="switchView('contact'); return false;">CONTACT</a>
       </div>
-      <button class="filter-reset" onclick="resetFilters()">
-        RESET
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-      </button>
+    </nav>
+  </header>
+
+  <div class="filter-bar" id="filterBar">
+    <div class="filter-inner">
+      <div class="filter-group category-group">
+        <label style="font-weight: 700; color: var(--text); cursor: pointer;" onclick="setCategory('', null)">CATEGORY</label>
+        <div class="category-list">
+          <button class="cat-filter-btn" data-cat="GRAPHIC" onclick="setCategory('GRAPHIC', this)">GRAPHIC</button>
+          <button class="cat-filter-btn" data-cat="GOODS" onclick="setCategory('GOODS', this)">GOODS</button>
+          <button class="cat-filter-btn" data-cat="EDITORIAL" onclick="setCategory('EDITORIAL', this)">EDITORIAL</button>
+          <button class="cat-filter-btn" data-cat="WEB DESIGN" onclick="setCategory('WEB DESIGN', this)">WEB DESIGN</button>
+          <button class="cat-filter-btn" data-cat="SPACE" onclick="setCategory('SPACE', this)">SPACE</button>
+          <button class="cat-filter-btn" data-cat="ILLUSTRATION" onclick="setCategory('ILLUSTRATION', this)">ILLUSTRATION</button>
+          <button class="cat-filter-btn" data-cat="ORIGINAL" onclick="setCategory('ORIGINAL', this)">ORIGINAL</button>
+        </div>
+      </div>
+
+      <div class="filter-right">
+        <div class="filter-group">
+          <label>YEAR</label>
+          <select id="filterYear" onchange="applyFilters()">
+            <option value="">All</option>
+            <option value="before2017">Before 2017</option>
+            <option value="2017">2017</option>
+            <option value="2018">2018</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+        </div>
+        <button class="filter-reset" onclick="resetFilters()">
+          RESET
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main id="galleryMain">
+    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="no-results" id="noResults" style="display:none;">
+      <p>해당하는 작업물이 없습니다.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ================= DETAIL VIEW ================= -->
+<div id="view-detail" class="view-container">
+  <header id="siteHeaderDetail">
+    <nav>
+      <a href="#" onclick="switchView('index'); return false;" class="logo">STUDIO ZIP</a>
+      <div class="nav-links">
+        <a href="#" onclick="switchView('contact'); return false;">CONTACT</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="detail-page" id="detailPage">
+    <div class="detail-content" id="detailContent"></div>
+  </main>
+</div>
+
+<!-- ================= CONTACT VIEW ================= -->
+<div id="view-contact" class="view-container">
+  <header id="siteHeaderContact">
+    <nav>
+      <a href="#" onclick="switchView('index'); return false;" class="logo">STUDIO ZIP</a>
+      <div class="nav-links">
+        <a href="#" onclick="switchView('contact'); return false;" class="active">CONTACT</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="contact-main">
+    <div class="contact-wrapper">
+      <section class="about-section">
+        <h1>안녕하세요,<br>저는 <em>홍길동</em>입니다.</h1>
+        <p class="about-desc">
+          브랜딩, UI/UX, 패키지 디자인을 중심으로 활동하는 디자이너입니다.<br>
+          클라이언트의 비전을 시각적 언어로 번역하는 일에 열정을 가지고 있습니다.<br>
+          작업 의뢰나 협업 제안은 아래 폼을 통해 편하게 연락 주세요.
+        </p>
+        <div class="about-links">
+          <a href="mailto:your@gmail.com">your@gmail.com</a>
+          <div class="about-social">
+            <a href="[https://instagram.com/instagram](https://instagram.com/instagram)" target="_blank" class="social-icon-link" aria-label="Instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+              </svg>
+            </a>
+            <a href="[https://x.com/x](https://x.com/x)" target="_blank" class="social-icon-link" aria-label="X">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-section">
+        <h2>작업 의뢰</h2>
+        <div id="formWrap">
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label for="name">담당자 이름 <span class="required">*</span></label>
+              <input type="text" id="name" placeholder="홍길동" oninput="checkForm()">
+            </div>
+            <div class="form-group">
+              <label for="phone">연락처 <span class="required">*</span></label>
+              <input type="tel" id="phone" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" oninput="formatPhone(this)">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">이메일 <span class="required">*</span></label>
+            <input type="email" id="email" placeholder="hello@email.com" oninput="checkForm()" onblur="validateEmail()">
+            <span class="field-error" id="emailError">올바른 이메일 주소를 입력해 주세요.</span>
+          </div>
+
+          <div class="form-group">
+            <label>의뢰 분야 <span class="required">*</span> <span class="label-sub">(복수 선택 가능)</span></label>
+            <div class="checkbox-grid" id="catGrid">
+              <label class="check-item"><input type="checkbox" value="GRAPHIC" onchange="checkForm()"><span>GRAPHIC</span></label>
+              <label class="check-item"><input type="checkbox" value="GOODS" onchange="checkForm()"><span>GOODS</span></label>
+              <label class="check-item"><input type="checkbox" value="EDITORIAL" onchange="checkForm()"><span>EDITORIAL</span></label>
+              <label class="check-item"><input type="checkbox" value="ILLUSTRATION" onchange="checkForm()"><span>ILLUSTRATION</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>상세 분야 <span class="required">*</span></label>
+            <div class="checkbox-grid" style="grid-template-columns: 1fr 1fr;">
+              <label class="check-item"><input type="radio" name="detail_category" value="디자인 의뢰만" onchange="checkForm()"><span>디자인 의뢰만</span></label>
+              <label class="check-item"><input type="radio" name="detail_category" value="제품 제작 및 납품 포함" onchange="checkForm()"><span>제품 제작 및 납품 포함</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>프로젝트 예산범위 <span class="required">*</span></label>
+            <div class="checkbox-grid">
+              <label class="check-item"><input type="radio" name="budget" value="300만원 이하" onchange="checkForm()"><span>300만원 이하</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="300만원 이상" onchange="checkForm()"><span>300만원 이상</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="500만원 이상" onchange="checkForm()"><span>500만원 이상</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="1000만원 이상" onchange="checkForm()"><span>1000만원 이상</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="기타" onchange="checkForm()"><span>기타</span></label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="schedule">프로젝트 일정 <span class="required">*</span></label>
+            <input type="text" id="schedule" placeholder="예: 2026년 5월 완료 목표" oninput="checkForm()">
+          </div>
+
+          <div class="form-group">
+            <label for="message">프로젝트 내용 <span class="required">*</span></label>
+            <textarea id="message" rows="6" placeholder="프로젝트 개요, 방향성 등을 자유롭게 작성해 주세요." oninput="checkForm()"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="attachment">참고자료 첨부</label>
+            <input type="file" id="attachment" onchange="checkForm()">
+          </div>
+
+          <button class="submit-btn" id="submitBtn" disabled onclick="sendEmail()">
+            <span id="btnText">문의 보내기</span>
+          </button>
+        </div>
+
+        <div id="successMsg" class="success-msg" style="display:none;">
+          <div class="success-icon">✓</div>
+          <h3>문의가 접수되었습니다</h3>
+          <p>빠른 시일 내에 연락드리겠습니다. 감사합니다.</p>
+          <button onclick="resetForm()">새 문의하기</button>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- ================= ADMIN VIEW ================= -->
+<div id="view-admin" class="view-container">
+  <div id="loginScreen" class="login-screen">
+    <div class="login-box">
+      <h1>관리자 로그인</h1>
+      <div class="form-group">
+        <label for="adminPw">비밀번호</label>
+        <input type="password" id="adminPw" placeholder="비밀번호 입력 (기본: your_password_here)"
+               onkeydown="if(event.key==='Enter') login()">
+      </div>
+      <button onclick="login()" class="submit-btn" style="width:100%;margin-top:8px;">로그인</button>
+      <p id="loginError" class="error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</p>
+      
+      <button onclick="switchView('index')" class="submit-btn" style="background:var(--bg2); color:var(--text); margin-top:12px;">← 홈으로 돌아가기</button>
+    </div>
+  </div>
+
+  <div id="adminPanel" style="display:none;">
+    <header class="admin-header">
+      <span class="logo">CMS 관리자</span>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <a href="#" onclick="switchView('index'); return false;" class="preview-link">사이트 미리보기 →</a>
+        <button onclick="logout()" class="logout-btn">로그아웃</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="sidebar-header">
+          <h2>프로젝트</h2>
+          <button onclick="newProject()" class="add-btn">+ 추가</button>
+        </div>
+        <ul id="projectList" class="project-list"></ul>
+      </aside>
+
+      <div class="admin-editor" id="editorArea">
+        <div class="editor-empty">
+          <p>왼쪽에서 프로젝트를 선택하거나<br>새 프로젝트를 추가하세요.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 갤러리 -->
-<main id="galleryMain">
-  <div class="gallery-grid" id="galleryGrid"></div>
-  <div class="no-results" id="noResults" style="display:none;">
-    <p>해당하는 작업물이 없습니다.</p>
-  </div>
-</main>
-
-<!-- 상세 페이지 (데스크탑: 슬라이드인 / 모바일: 새 페이지처럼) -->
-<div class="detail-page" id="detailPage">
-  <div class="detail-content" id="detailContent"></div>
-</div>
+<!-- ─── Mouse Trail Canvas ─── -->
+<canvas id="mouseTrailCanvas" class="mouse-trail"></canvas>
 
 <script>
+// SPA Navigation System
+function switchView(viewId) {
+  document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + viewId).classList.add('active');
+  window.scrollTo(0, 0);
+
+  if (viewId === 'admin') {
+    document.body.classList.add('admin-body');
+  } else {
+    document.body.classList.remove('admin-body');
+  }
+
+  if (viewId === 'index') {
+    allProjects = getProjects();
+    resetFilters();
+  }
+}
+
+// ───────────────────────────────────────────────
+// INDEX JS
+// ───────────────────────────────────────────────
 function getProjects() {
   const saved = localStorage.getItem('portfolio_projects');
   if (saved) return JSON.parse(saved);
+  
+  // 목업 데이터도 신규 카테고리에 맞춰 수정
   return [
-    { id:1, title:"브랜드 아이덴티티 프로젝트", category:"Branding", thumbnail:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", date:"2024.03", year:"2024",
+    { id:1, title:"브랜드 아이덴티티 프로젝트", category: ["GRAPHIC", "EDITORIAL"], thumbnail:"[https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80](https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80)", date:"2024.03", year:"2024",
       content:[ {type:"text",value:"클라이언트의 브랜드 정체성을 재정립하는 프로젝트였습니다. 로고, 컬러 시스템, 타이포그래피를 포함한 전체적인 비주얼 아이덴티티를 디자인했습니다. 브랜드 컬러는 신뢰감과 전문성을 강조하는 딥 네이비와 골드 조합을 채택했으며, 모든 터치포인트에서 일관된 경험을 제공하도록 설계되었습니다."},
-        {type:"image",value:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80",caption:"메인 로고 디자인"},
-        {type:"image",value:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80",caption:"브랜드 컬러 시스템"} ] },
-    { id:2, title:"모바일 앱 UI/UX 디자인", category:"UI/UX", thumbnail:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80", date:"2024.01", year:"2024",
+        {type:"image",value:"[https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80](https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80)",caption:"메인 로고 디자인"},
+        {type:"image",value:"[https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80](https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80)",caption:"브랜드 컬러 시스템"} ] },
+    { id:2, title:"모바일 앱 UI/UX 디자인", category: ["WEB DESIGN"], thumbnail:"[https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80](https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80)", date:"2024.01", year:"2024",
       content:[ {type:"text",value:"헬스케어 스타트업의 모바일 앱 전체 UI/UX를 담당했습니다. 사용자 리서치부터 프로토타이핑까지 전 과정을 진행했습니다. 핵심 목표는 복잡한 의료 정보를 직관적으로 표현하는 것이었습니다."},
-        {type:"image",value:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80",caption:"앱 메인 화면"} ] },
-    { id:3, title:"패키지 디자인", category:"Packaging", thumbnail:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80", date:"2023.11", year:"2023",
+        {type:"image",value:"[https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80](https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80)",caption:"앱 메인 화면"} ] },
+    { id:3, title:"패키지 디자인", category: ["GOODS", "GRAPHIC"], thumbnail:"[https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80](https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80)", date:"2023.11", year:"2023",
       content:[ {type:"text",value:"친환경 뷰티 브랜드의 패키지 라인업 전체를 디자인했습니다. 지속가능성과 프리미엄 감성을 동시에 담아내는 것이 핵심 챌린지였습니다."},
-        {type:"image",value:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80",caption:"패키지 라인업"} ] },
-    { id:4, title:"웹사이트 리디자인", category:"Web Design", thumbnail:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80", date:"2023.09", year:"2023",
+        {type:"image",value:"[https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80](https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80)",caption:"패키지 라인업"} ] },
+    { id:4, title:"웹사이트 리디자인", category: ["WEB DESIGN", "ORIGINAL"], thumbnail:"[https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80](https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80)", date:"2023.09", year:"2023",
       content:[ {type:"text",value:"레거시 기업의 웹사이트를 현대적으로 리디자인하는 프로젝트입니다. 브랜드의 전통성을 유지하면서도 디지털 환경에 맞는 UX를 구현했습니다."},
-        {type:"image",value:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80",caption:"리디자인 메인 페이지"} ] },
-    { id:5, title:"포스터 캠페인", category:"Print", thumbnail:"https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80", date:"2022.07", year:"2022",
+        {type:"image",value:"[https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80](https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80)",caption:"리디자인 메인 페이지"} ] },
+    { id:5, title:"포스터 캠페인", category: ["EDITORIAL", "ILLUSTRATION"], thumbnail:"[https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80](https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80)", date:"2022.07", year:"2022",
       content:[ {type:"text",value:"문화 기관의 연간 전시 포스터 시리즈를 제작했습니다. 각 전시의 특성을 시각적으로 표현하면서도 브랜드 통일성을 유지했습니다."},
-        {type:"image",value:"https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80",caption:"포스터 시리즈"} ] },
-    { id:6, title:"타이포그래피 실험", category:"Typography", thumbnail:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80", date:"2016.05", year:"before2017",
+        {type:"image",value:"[https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80](https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80)",caption:"포스터 시리즈"} ] },
+    { id:6, title:"타이포그래피 실험", category: ["EDITORIAL"], thumbnail:"[https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80](https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80)", date:"2016.05", year:"before2017",
       content:[ {type:"text",value:"개인 프로젝트로 진행한 타이포그래피 실험 시리즈입니다. 한글과 영문을 함께 사용하는 독자적인 레이아웃 시스템을 탐구했습니다."},
-        {type:"image",value:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80",caption:"타이포그래피 실험 작품"} ] }
+        {type:"image",value:"[https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80](https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80)",caption:"타이포그래피 실험 작품"} ] }
   ];
 }
 
-const allProjects = getProjects();
+let allProjects = getProjects();
+let currentSelectedCategory = ''; // 현재 선택된 카테고리를 저장하는 변수
 
 function renderGallery(projects) {
   const grid = document.getElementById('galleryGrid');
   const noResults = document.getElementById('noResults');
   if (!projects.length) { grid.innerHTML=''; noResults.style.display='flex'; return; }
   noResults.style.display = 'none';
-  grid.innerHTML = projects.map(p => `
+  grid.innerHTML = projects.map(p => {
+    const cats = Array.isArray(p.category) ? p.category : [p.category];
+    const catTags = cats.map(c => `<span class="cat-badge" data-category="${c}">${c}</span>`).join('');
+    return `
     <div class="gallery-item" onclick="openDetail(${p.id})">
       <div class="gallery-thumb">
         <img src="${p.thumbnail}" alt="${p.title}" loading="lazy">
       </div>
       <div class="gallery-label">
         <span class="gallery-title-text">${p.title}</span>
-        <span class="gallery-cat-tag">${p.category}</span>
+        <div class="gallery-cat-tags">${catTags}</div>
       </div>
     </div>
-  `).join('');
+    `;
+  }).join('');
+}
+
+// 카테고리 버튼 클릭 시 호출
+function setCategory(cat, btnElement) {
+  currentSelectedCategory = cat;
+  
+  // 모든 카테고리 버튼에서 active 클래스 제거
+  document.querySelectorAll('.cat-filter-btn').forEach(btn => btn.classList.remove('active'));
+  
+  // 클릭한 버튼에 active 클래스 추가 ('All' 버튼이 사라졌으므로 초기화 시 아무 버튼도 활성화되지 않음)
+  if(btnElement) {
+    btnElement.classList.add('active');
+  }
+  
+  applyFilters();
 }
 
 function applyFilters() {
   const year = document.getElementById('filterYear').value;
-  const cat  = document.getElementById('filterCategory').value;
+  const cat  = currentSelectedCategory; // 버튼으로 선택된 카테고리
+  
   let f = allProjects;
   if (year) f = f.filter(p => p.year === year);
-  if (cat)  f = f.filter(p => p.category === cat);
+  if (cat)  f = f.filter(p => Array.isArray(p.category) ? p.category.includes(cat) : p.category === cat);
   renderGallery(f);
 }
 
 function resetFilters() {
   document.getElementById('filterYear').value = '';
-  document.getElementById('filterCategory').value = '';
-  renderGallery(allProjects);
+  setCategory(''); // 카테고리를 빈 값으로 리셋
 }
 
 function isMobile() { return window.innerWidth <= 768; }
 
 function buildDetailHTML(p) {
-  // 텍스트 블록들 합치기 (상단에만)
   const texts = p.content.filter(b => b.type === 'text').map(b => `<p class="detail-text">${b.value}</p>`).join('');
   const images = p.content.filter(b => b.type === 'image').map(b =>
-    `<figure class="detail-figure"><img src="${b.value}" alt="${b.caption||''}"><figcaption>${b.caption||''}</figcaption></figure>`
+    `<figure class="detail-figure"><img src="${b.value}" alt="${b.caption||''}"></figure>`
   ).join('');
+
+  const yearOnly = p.date.substring(0, 4);
+  
+  const cats = Array.isArray(p.category) ? p.category : [p.category];
+  const catTags = cats.map(c => `<span class="cat-badge" data-category="${c}">${c}</span>`).join('');
 
   return `
     <div class="detail-header">
       <h1>${p.title}</h1>
-      <div class="detail-meta-right">
-        <span class="detail-cat">${p.category}</span>
-        <span class="detail-date">${p.date}</span>
+      <div class="detail-meta">
+        <span class="detail-date">${yearOnly}</span>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+          ${catTags}
+        </div>
       </div>
     </div>
     <div class="detail-body">
@@ -173,33 +394,391 @@ function openDetail(id) {
   if (!p) return;
 
   const html = buildDetailHTML(p);
-
-  if (isMobile()) {
-    // 모바일: 상세페이지를 body에 직접 표시 (transform 없이 즉시)
-    const dp = document.getElementById('detailPage');
-    document.getElementById('detailContent').innerHTML = html;
-    dp.classList.add('active', 'mobile-mode');
-    dp.scrollTop = 0;
-    document.body.style.overflow = 'hidden';
-  } else {
-    // 데스크탑: 슬라이드인
-    const dp = document.getElementById('detailPage');
-    document.getElementById('detailContent').innerHTML = html;
-    dp.classList.remove('mobile-mode');
-    dp.classList.add('active');
-    dp.scrollTop = 0;
-    document.body.style.overflow = 'hidden';
-  }
+  document.getElementById('detailContent').innerHTML = html;
+  
+  switchView('detail');
 }
 
 function closeDetail() {
-  const dp = document.getElementById('detailPage');
-  dp.classList.remove('active', 'mobile-mode');
-  document.body.style.overflow = '';
+  switchView('index');
 }
 
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeDetail(); });
+document.addEventListener('keydown', e => { 
+  if (e.key === 'Escape' && document.getElementById('view-detail').classList.contains('active')) {
+    closeDetail(); 
+  }
+});
+
 renderGallery(allProjects);
+
+// ───────────────────────────────────────────────
+// CONTACT JS
+// ───────────────────────────────────────────────
+const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+function formatPhone(input) {
+  let val = input.value.replace(/\D/g, '');
+  if (val.length > 11) val = val.slice(0, 11);
+  if (val.length <= 3) input.value = val;
+  else if (val.length <= 7) input.value = val.slice(0,3) + '-' + val.slice(3);
+  else input.value = val.slice(0,3) + '-' + val.slice(3,7) + '-' + val.slice(7);
+  checkForm();
+}
+
+function isEmailValid(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+function validateEmail() {
+  const emailEl = document.getElementById('email');
+  const errEl   = document.getElementById('emailError');
+  const v = emailEl.value.trim();
+  if (v && !isEmailValid(v)) {
+    errEl.classList.add('visible');
+    emailEl.classList.add('input-error');
+  } else {
+    errEl.classList.remove('visible');
+    emailEl.classList.remove('input-error');
+  }
+  checkForm();
+}
+
+function getCheckedCategories() {
+  return [...document.querySelectorAll('#catGrid input:checked')].map(el => el.value);
+}
+
+function checkForm() {
+  const name    = document.getElementById('name').value.trim();
+  const phone   = document.getElementById('phone').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const schedule = document.getElementById('schedule').value.trim();
+  const cats    = getCheckedCategories();
+  const detailCat = document.querySelector('input[name="detail_category"]:checked');
+  const budget = document.querySelector('input[name="budget"]:checked');
+  
+  document.getElementById('submitBtn').disabled = !(name && phone.length>=12 && isEmailValid(email) && cats.length && detailCat && budget && schedule && message);
+}
+
+function sendEmail() {
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('btnText').textContent = '전송 중...';
+  const detailCat = document.querySelector('input[name="detail_category"]:checked').value;
+  const budget = document.querySelector('input[name="budget"]:checked').value;
+  const schedule = document.getElementById('schedule').value;
+  const attachment = document.getElementById('attachment').files[0];
+  const attachName = attachment ? attachment.name : '첨부파일 없음';
+
+  const params = {
+    from_name: document.getElementById('name').value,
+    phone:     document.getElementById('phone').value,
+    email:     document.getElementById('email').value,
+    category:  getCheckedCategories().join(', '),
+    detail_category: detailCat,
+    budget: budget,
+    schedule: schedule,
+    attachment_name: attachName,
+    message:   document.getElementById('message').value
+  };
+  
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+    .then(() => {
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    })
+    .catch(err => {
+      alert('전송 중 오류가 발생했습니다.');
+      console.error(err);
+      document.getElementById('btnText').textContent = '문의 보내기';
+      checkForm();
+    });
+}
+
+function resetForm() {
+  ['name','phone','email','schedule','message','attachment'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  document.querySelectorAll('.checkbox-grid input').forEach(el => el.checked=false);
+  document.getElementById('formWrap').style.display='block';
+  document.getElementById('successMsg').style.display='none';
+  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('btnText').textContent='문의 보내기';
+  document.getElementById('emailError').classList.remove('visible');
+  document.getElementById('email').classList.remove('input-error');
+}
+
+// ───────────────────────────────────────────────
+// ADMIN JS
+// ───────────────────────────────────────────────
+const ADMIN_PASSWORD = 'your_password_here';
+
+let adminProjectsList = [];
+let editingId = null;
+let blockCounter = 0;
+
+function login() {
+  const pw = document.getElementById('adminPw').value;
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('admin_auth', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadProjects();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('admin_auth');
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('adminPanel').style.display = 'none';
+}
+
+if (sessionStorage.getItem('admin_auth') === '1') {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminPanel').style.display = 'block';
+  loadProjects();
+}
+
+function loadProjects() {
+  const saved = localStorage.getItem('portfolio_projects');
+  adminProjectsList = saved ? JSON.parse(saved) : getProjects(); 
+  renderList();
+}
+
+function saveProjects() {
+  localStorage.setItem('portfolio_projects', JSON.stringify(adminProjectsList));
+}
+
+function renderList() {
+  const list = document.getElementById('projectList');
+  list.innerHTML = adminProjectsList.map(p => {
+    const catStr = Array.isArray(p.category) ? p.category.join(', ') : p.category;
+    return `
+    <li class="project-item ${editingId === p.id ? 'active' : ''}" onclick="editProject(${p.id})">
+      <div class="project-item-thumb">
+        <img src="${p.thumbnail}" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="project-item-info">
+        <strong>${p.title}</strong>
+        <span>${catStr} · ${p.date}</span>
+      </div>
+    </li>
+  `}).join('');
+}
+
+function newProject() {
+  const id = Date.now();
+  const p = {
+    id,
+    title: '새 프로젝트',
+    category: ['GRAPHIC'], // 신규 기본 카테고리 적용
+    thumbnail: '',
+    date: new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit'}).replace('. ','.').replace('.',''),
+    content: []
+  };
+  adminProjectsList.unshift(p);
+  saveProjects();
+  renderList();
+  editProject(id);
+}
+
+function editProject(id) {
+  editingId = id;
+  renderList();
+  const p = adminProjectsList.find(x => x.id === id);
+  if (!p) return;
+
+  const mainCat = Array.isArray(p.category) ? p.category[0] : p.category;
+
+  document.getElementById('editorArea').innerHTML = `
+    <div class="editor-form">
+      <div class="editor-topbar">
+        <h2>프로젝트 편집</h2>
+        <div style="display:flex;gap:8px;">
+          <button onclick="saveProject()" class="save-btn">저장</button>
+          <button onclick="deleteProject(${id})" class="delete-btn">삭제</button>
+        </div>
+      </div>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label>제목</label>
+          <input type="text" id="eTitle" value="${p.title}">
+        </div>
+        <div class="form-group">
+          <label>카테고리</label>
+          <select id="eCategory">
+            ${['GRAPHIC','GOODS','EDITORIAL','WEB DESIGN','SPACE','ILLUSTRATION','ORIGINAL']
+              .map(c => `<option ${mainCat===c?'selected':''}>${c}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row two-col">
+        <div class="form-group">
+          <label>날짜 (예: 2024.03)</label>
+          <input type="text" id="eDate" value="${p.date}">
+        </div>
+        <div class="form-group">
+          <label>썸네일 이미지 URL</label>
+          <input type="text" id="eThumbnail" value="${p.thumbnail}" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="content-editor">
+        <div class="content-editor-header">
+          <label>상세 콘텐츠 블록</label>
+          <div style="display:flex;gap:8px;">
+            <button onclick="addBlock('text')" class="add-block-btn">+ 텍스트</button>
+            <button onclick="addBlock('image')" class="add-block-btn">+ 이미지</button>
+          </div>
+        </div>
+        <div id="blocksContainer">
+          ${p.content.map((b,i) => renderBlock(b,i)).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+  blockCounter = p.content.length;
+}
+
+function renderBlock(block, idx) {
+  if (block.type === 'text') return `
+    <div class="block-item" data-idx="${idx}" data-type="text">
+      <div class="block-handle">
+        <span class="block-label">텍스트</span>
+        <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
+      </div>
+      <textarea rows="4" id="block_${idx}" oninput="updateBlock(${idx},'text',this.value)">${block.value}</textarea>
+    </div>`;
+  if (block.type === 'image') return `
+    <div class="block-item" data-idx="${idx}" data-type="image">
+      <div class="block-handle">
+        <span class="block-label">이미지</span>
+        <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
+      </div>
+      <input type="text" id="block_${idx}" placeholder="이미지 URL" value="${block.value}"
+             oninput="updateBlock(${idx},'image_url',this.value)">
+      <input type="text" id="block_cap_${idx}" placeholder="캡션 (선택)" value="${block.caption||''}"
+             oninput="updateBlock(${idx},'caption',this.value)" style="margin-top:6px;">
+      ${block.value ? `<img src="${block.value}" class="block-preview" onerror="this.style.display='none'">` : ''}
+    </div>`;
+  return '';
+}
+
+function addBlock(type) {
+  const p = adminProjectsList.find(x => x.id === editingId);
+  if (!p) return;
+  if (type === 'text') p.content.push({ type: 'text', value: '' });
+  if (type === 'image') p.content.push({ type: 'image', value: '', caption: '' });
+  saveProjects();
+  editProject(editingId);
+}
+
+function removeBlock(idx) {
+  const p = adminProjectsList.find(x => x.id === editingId);
+  if (!p) return;
+  p.content.splice(idx, 1);
+  saveProjects();
+  editProject(editingId);
+}
+
+function updateBlock(idx, field, value) {
+  const p = adminProjectsList.find(x => x.id === editingId);
+  if (!p || !p.content[idx]) return;
+  if (field === 'text') p.content[idx].value = value;
+  if (field === 'image_url') p.content[idx].value = value;
+  if (field === 'caption') p.content[idx].caption = value;
+}
+
+function saveProject() {
+  const p = adminProjectsList.find(x => x.id === editingId);
+  if (!p) return;
+  p.title     = document.getElementById('eTitle').value;
+  p.category  = [document.getElementById('eCategory').value]; 
+  p.date      = document.getElementById('eDate').value;
+  p.thumbnail = document.getElementById('eThumbnail').value;
+  saveProjects();
+  renderList();
+
+  const btn = document.querySelector('.save-btn');
+  btn.textContent = '저장됨 ✓';
+  btn.style.background = '#22c55e';
+  btn.style.color = '#fff';
+  setTimeout(() => { btn.textContent = '저장'; btn.style.background = ''; btn.style.color = ''; }, 1500);
+}
+
+function deleteProject(id) {
+  if (!confirm('이 프로젝트를 삭제할까요?')) return;
+  adminProjectsList = adminProjectsList.filter(p => p.id !== id);
+  saveProjects();
+  editingId = null;
+  renderList();
+  document.getElementById('editorArea').innerHTML = `<div class="editor-empty"><p>프로젝트를 선택하거나 추가하세요.</p></div>`;
+}
+
+// ───────────────────────────────────────────────
+// MOUSE TRAIL EFFECT (PC Only, 0.2초 유지, 부드러운 곡선)
+// ───────────────────────────────────────────────
+const trailCanvas = document.getElementById('mouseTrailCanvas');
+const ctx = trailCanvas.getContext('2d');
+let points = [];
+const TRAIL_LIFETIME = 200; // 라인이 유지되는 시간 (0.2초 = 200ms)
+
+function resizeTrailCanvas() {
+  trailCanvas.width = window.innerWidth;
+  trailCanvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeTrailCanvas);
+resizeTrailCanvas();
+
+window.addEventListener('mousemove', (e) => {
+  if (window.innerWidth <= 768) return; // 모바일(768px 이하) 제외
+  points.push({ x: e.clientX, y: e.clientY, time: Date.now() });
+});
+
+function animateTrail() {
+  requestAnimationFrame(animateTrail);
+  
+  // 캔버스 초기화
+  ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
+  if (window.innerWidth <= 768) return;
+
+  const currentTime = Date.now();
+  
+  // 1초가 지난 과거의 마우스 좌표들은 배열에서 즉시 제거
+  points = points.filter(p => currentTime - p.time < TRAIL_LIFETIME);
+
+  if (points.length < 2) return;
+
+  // 점들을 부드러운 곡선(Quadratic Curve)으로 연결하여 그리기
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  
+  for (let i = 1; i < points.length - 1; i++) {
+    const xc = (points[i].x + points[i + 1].x) / 2;
+    const yc = (points[i].y + points[i + 1].y) / 2;
+    ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+  }
+  
+  // 마지막 점 연결
+  ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+  
+  // 요청하신 색상(#1E50D9)으로 변경
+  ctx.strokeStyle = '#1E50D9';
+  ctx.lineWidth = 5; // 라인 두께 5px로 변경
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+}
+
+animateTrail();
+
 </script>
 </body>
 </html>
