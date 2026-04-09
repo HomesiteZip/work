@@ -1,13 +1,11 @@
 backend:
   name: git-gateway
-  repo: homesitezip/work
   branch: main
+  identity_url: https://stwork.netlify.app/.netlify/identity
+  gateway_url: https://stwork.netlify.app/.netlify/git
 
-# 아래 경로들에서 맨 앞의 슬래시(/)를 빼거나 넣어보며 조절해야 할 수 있는데, 
-# 일단 아래처럼 슬래시 없이(상대경로) 써보세요.
 media_folder: "assets/images/portfolio"
 public_folder: "assets/images/portfolio"
-
 collections:
   - name: "portfolio"
     label: "포트폴리오"
