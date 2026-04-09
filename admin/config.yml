@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: homesitezip/work
+  repo: HomesiteZip/work
   branch: main
 
 media_folder: "assets/images/portfolio" # 깃허브 저장소 내 실제 폴더 위치
