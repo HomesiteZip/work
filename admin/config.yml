@@ -3,9 +3,6 @@ backend:
   repo: homesitezip/work
   branch: main
 
-site_url: https://homesitezip.github.io/work/
-display_url: https://homesitezip.github.io/work/
-
 media_folder: "assets/images/portfolio"
 public_folder: "/work/assets/images/portfolio"
 
@@ -16,5 +13,5 @@ collections:
     create: true
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "대표 이미지", name: "featured_image", widget: "image" }
+      - { label: "이미지", name: "image", widget: "image" }
       - { label: "설명", name: "body", widget: "markdown" }
