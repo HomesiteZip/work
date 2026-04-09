@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: 자신의계정명/저장소이름 # 예: design-pro/portfolio
+  repo: homesitezip/work
   branch: main # 혹은 master
 
 media_folder: "assets/images/portfolio" # 이미지가 업로드될 경로
