@@ -15,3 +15,12 @@ collections:
       - { label: "제목", name: "title", widget: "string" }
       - { label: "대표 이미지", name: "featured_image", widget: "image" }
       - { label: "설명", name: "body", widget: "markdown" }
+
+backend:
+  name: github
+  repo: homesitezip/work
+  branch: main
+
+# 사이트의 실제 주소
+site_url: https://homesitezip.github.io/work/
+display_url: https://homesitezip.github.io/work/
