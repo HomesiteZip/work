@@ -824,3 +824,4 @@ textarea { resize: vertical; }
   .admin-layout { grid-template-columns: 1fr; }
   .admin-sidebar { position: static; height: auto; }
 }
+ 
