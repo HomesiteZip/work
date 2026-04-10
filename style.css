@@ -19,7 +19,7 @@
   --text3:   #999999;
   --border:  rgba(0,0,0,0.09);
   --border2: rgba(0,0,0,0.16);
-  --header-h: 35px;
+  --header-h: 40px;
   --filter-h: 44px;
   --font-sans: 'SUIT', sans-serif;
   --font-serif: 'SUIT', sans-serif;
@@ -63,7 +63,7 @@ nav {
 }
 
 .logo {
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.18em;
   color: var(--text);
@@ -76,7 +76,7 @@ nav {
 }
 
 .nav-links a {
-  font-size: 12px;
+  font-size: 18px;
   letter-spacing: 0.1em;
   color: var(--text2);
   transition: color 0.2s;
@@ -146,11 +146,12 @@ nav {
 }
 
 .cat-filter-btn {
-  font-size: 13px;
+  font-size: 18px;
   color: var(--text3);
   background: none;
   border: none;
   padding: 0;
+  letter-spacing : -0.03em;
   cursor: pointer;
   white-space: nowrap;
   transition: color 0.2s;
@@ -167,8 +168,8 @@ nav {
 }
 
 .filter-group label {
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  font-size: 18px;
+  letter-spacing: -0.03em;
   color: var(--text3);
   font-weight: 500;
   white-space: nowrap;
@@ -250,8 +251,9 @@ nav {
 }
 
 .gallery-title-text {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
+  letter-spacing : -0.03em;
   color: var(--text);
   line-height: 1.4;
 }
@@ -387,10 +389,10 @@ nav {
 .about-section h1 em { font-style: italic; }
 
 .about-desc {
-  font-size: 14px;
+  font-size: 18px;
   line-height: 2;
   color: var(--text2);
-  margin-bottom: 28px;
+  margin-bottom: 50px;
 }
 
 .about-links {
@@ -400,7 +402,7 @@ nav {
 }
 
 .about-links a {
-  font-size: 12px;
+  font-size: 18px;
   color: var(--text3);
   border-bottom: 1px solid transparent;
   display: inline;
