@@ -404,13 +404,17 @@ let currentSelectedCategory = '';
 async function loadPortfolioFromGitHub() {
   try {
     const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${PORTFOLIO_PATH}?ref=${GITHUB_BRANCH}`;
+    console.log('① API 호출:', apiUrl);
     const res = await fetch(apiUrl);
-    if (!res.ok) throw new Error('GitHub API 응답 오류');
+    if (!res.ok) throw new Error('GitHub API 응답 오류: ' + res.status);
     const files = await res.json();
     const mdFiles = files.filter(f => f.name.endsWith('.md'));
+    console.log('② md 파일 목록:', mdFiles.map(f => f.name));
 
     const projects = await Promise.all(mdFiles.map(async (file, idx) => {
+      console.log('③ 파일 fetch 시도:', file.download_url);
       const contentRes = await fetch(file.download_url);
+      console.log('④ 파일 fetch 응답:', file.name, contentRes.status);
       const raw = await contentRes.text();
       const fm = parseFrontmatter(raw);
 
@@ -768,3 +772,15 @@ function animateTrail() {
   }
 
  
+  ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+  ctx.strokeStyle = 'rgba(17,17,17,0.18)';
+  ctx.lineWidth = 1.5;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+}
+
+animateTrail();
+</script>
+</body>
+</html>
