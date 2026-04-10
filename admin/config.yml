@@ -27,10 +27,10 @@ collections:
         widget: "select"
         multiple: true
         options:
-          - { label: "GRAPHIC", value: "GRAPHIC" }
           - { label: "GOODS", value: "GOODS" }
           - { label: "EDITORIAL", value: "EDITORIAL" }
-          - { label: "WEB DESIGN", value: "WEB DESIGN" }
+          - { label: "POSTER", value: "POSTER" }
+          - { label: "WEB", value: "WEB" }
           - { label: "SPACE", value: "SPACE" }
           - { label: "ILLUSTRATION", value: "ILLUSTRATION" }
           - { label: "ORIGINAL", value: "ORIGINAL" }
