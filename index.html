@@ -46,10 +46,10 @@
       <div class="filter-group category-group desktop-only">
         <label style="font-weight: 700; color: var(--text); cursor: pointer;" onclick="setCategory('', null)">CATEGORY</label>
         <div class="category-list">
-          <button class="cat-filter-btn" data-cat="GRAPHIC" onclick="setCategory('GRAPHIC', this)">GRAPHIC</button>
           <button class="cat-filter-btn" data-cat="GOODS" onclick="setCategory('GOODS', this)">GOODS</button>
           <button class="cat-filter-btn" data-cat="EDITORIAL" onclick="setCategory('EDITORIAL', this)">EDITORIAL</button>
-          <button class="cat-filter-btn" data-cat="WEB DESIGN" onclick="setCategory('WEB DESIGN', this)">WEB DESIGN</button>
+          <button class="cat-filter-btn" data-cat="POSTER" onclick="setCategory('POSTER', this)">POSTER</button>
+          <button class="cat-filter-btn" data-cat="WEB" onclick="setCategory('WEB', this)">WEB</button>
           <button class="cat-filter-btn" data-cat="SPACE" onclick="setCategory('SPACE', this)">SPACE</button>
           <button class="cat-filter-btn" data-cat="ILLUSTRATION" onclick="setCategory('ILLUSTRATION', this)">ILLUSTRATION</button>
           <button class="cat-filter-btn" data-cat="ORIGINAL" onclick="setCategory('ORIGINAL', this)">ORIGINAL</button>
@@ -95,10 +95,10 @@
           </button>
           <ul class="custom-select-list" id="mobileCatList">
             <li data-value="" class="active" onclick="mobileCatSelect('', 'CATEGORY')">CATEGORY</li>
-            <li data-value="GRAPHIC" onclick="mobileCatSelect('GRAPHIC', 'GRAPHIC')">GRAPHIC</li>
             <li data-value="GOODS" onclick="mobileCatSelect('GOODS', 'GOODS')">GOODS</li>
             <li data-value="EDITORIAL" onclick="mobileCatSelect('EDITORIAL', 'EDITORIAL')">EDITORIAL</li>
-            <li data-value="WEB DESIGN" onclick="mobileCatSelect('WEB DESIGN', 'WEB DESIGN')">WEB DESIGN</li>
+            <li data-value="POSTER" onclick="mobileCatSelect('POSTER', 'POSTER')">POSTER</li>
+            <li data-value="WEB" onclick="mobileCatSelect('WEB', 'WEB')">WEB</li>
             <li data-value="SPACE" onclick="mobileCatSelect('SPACE', 'SPACE')">SPACE</li>
             <li data-value="ILLUSTRATION" onclick="mobileCatSelect('ILLUSTRATION', 'ILLUSTRATION')">ILLUSTRATION</li>
             <li data-value="ORIGINAL" onclick="mobileCatSelect('ORIGINAL', 'ORIGINAL')">ORIGINAL</li>
@@ -186,7 +186,7 @@
           작업 의뢰나 협업 제안은 아래 폼을 통해 편하게 연락 주세요.
         </p>
         <div class="about-links">
-          <a href="mailto:studio.zip.md@gmail.com">studio.zip.md@gmail.com</a>
+          <a href="/cdn-cgi/l/email-protection#7b080f0e1f12145501120b55161f3b1c161a121755181416"><span class="__cf_email__" data-cfemail="a4d7d0d1c0cdcb8adecdd48ac9c0e4c3c9c5cdc88ac7cbc9">[email&#160;protected]</span></a>
           <div class="about-social">
             <a href="https://instagram.com/" target="_blank" class="social-icon-link" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -285,7 +285,7 @@
 <!-- ─── Mouse Trail Canvas ─── -->
 <canvas id="mouseTrailCanvas" class="mouse-trail"></canvas>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Netlify Identity - admin 리디렉션
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", user => {
@@ -597,15 +597,15 @@ function buildDetailHTML(p) {
   const catTags = cats.map(c => `<span class="cat-badge" data-category="${c}">${c}</span>`).join('');
 
   return `
-    <div class="detail-header">
-      <h1>${p.title}</h1>
+    <div class="detail-left">
+      <h1 class="detail-title">${p.title}</h1>
       <div class="detail-meta">
-        <span class="detail-date">${yearOnly}</span>
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">${catTags}</div>
+        <span class="detail-date">${yearOnly}</span>
       </div>
-    </div>
-    <div class="detail-body">
       ${texts ? `<div class="detail-texts">${texts}</div>` : ''}
+    </div>
+    <div class="detail-right">
       <div class="detail-images">${images}</div>
     </div>
   `;
@@ -767,15 +767,4 @@ function animateTrail() {
     ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
   }
 
-  ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-  ctx.strokeStyle = 'rgba(30, 100, 255, 0.7)';
-  ctx.lineWidth = 5;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.stroke();
-}
-
-animateTrail();
-</script>
-</body>
-</html>
+ 
