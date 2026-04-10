@@ -6,12 +6,45 @@ backend:
 
 media_folder: "assets/images/portfolio"
 public_folder: "assets/images/portfolio"
+
 collections:
   - name: "portfolio"
     label: "포트폴리오"
     folder: "_portfolio"
     create: true
+    slug: "{{slug}}"
+    sortable_fields: ["order", "title", "date"]
+    view_groups:
+      - label: "카테고리별"
+        field: category
     fields:
       - { label: "제목", name: "title", widget: "string" }
-      - { label: "이미지", name: "image", widget: "image" }
-      - { label: "설명", name: "body", widget: "markdown" }
+      - { label: "본문 글", name: "body", widget: "text" }
+
+      - label: "카테고리"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "GRAPHIC", value: "GRAPHIC" }
+          - { label: "GOODS", value: "GOODS" }
+          - { label: "EDITORIAL", value: "EDITORIAL" }
+          - { label: "WEB DESIGN", value: "WEB DESIGN" }
+          - { label: "SPACE", value: "SPACE" }
+          - { label: "ILLUSTRATION", value: "ILLUSTRATION" }
+          - { label: "ORIGINAL", value: "ORIGINAL" }
+
+      - { label: "연도 (예: 2024)", name: "date", widget: "string", pattern: ['^\d{4}$', '숫자 4자리로 입력하세요 (예: 2024)'] }
+
+      - { label: "썸네일 이미지", name: "thumbnail", widget: "image" }
+
+      - label: "상세 이미지 (드래그로 순서 변경 가능)"
+        name: "images"
+        widget: "list"
+        required: false
+        label_singular: "이미지"
+        allow_add: true
+        collapsed: false
+        field:
+          label: "이미지"
+          name: "image"
+          widget: "image"
