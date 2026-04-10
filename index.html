@@ -8,7 +8,7 @@
 <!-- 분리된 style.css 파일을 불러옵니다 -->
 <link rel="stylesheet" href="style.css">
 <script src="[https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js](https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js)"></script>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -256,6 +256,17 @@
 <canvas id="mouseTrailCanvas" class="mouse-trail"></canvas>
 
 <script>
+  //관리자 로그인 추가
+if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+  
 // SPA Navigation System
 function switchView(viewId) {
   document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
