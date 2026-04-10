@@ -257,11 +257,11 @@
 
 <script>
   //관리자 로그인 추가
-if (window.netlifyIdentity) {
+  if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", user => {
       if (!user) {
         window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
+          document.location.href = "/work/admin/";
         });
       }
     });
