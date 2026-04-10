@@ -35,6 +35,16 @@
           <button class="cat-filter-btn" data-cat="ILLUSTRATION" onclick="setCategory('ILLUSTRATION', this)">ILLUSTRATION</button>
           <button class="cat-filter-btn" data-cat="ORIGINAL" onclick="setCategory('ORIGINAL', this)">ORIGINAL</button>
         </div>
+        <select class="mobile-cat-select" id="mobileCatSelect" onchange="mobileCatChange(this)">
+          <option value="">ALL</option>
+          <option value="GRAPHIC">GRAPHIC</option>
+          <option value="GOODS">GOODS</option>
+          <option value="EDITORIAL">EDITORIAL</option>
+          <option value="WEB DESIGN">WEB DESIGN</option>
+          <option value="SPACE">SPACE</option>
+          <option value="ILLUSTRATION">ILLUSTRATION</option>
+          <option value="ORIGINAL">ORIGINAL</option>
+        </select>
       </div>
 
       <div class="filter-right">
@@ -111,7 +121,7 @@
           작업 의뢰나 협업 제안은 아래 폼을 통해 편하게 연락 주세요.
         </p>
         <div class="about-links">
-          <a href="/cdn-cgi/l/email-protection#3a525f5656557a5f575b535614595557"><span class="__cf_email__" data-cfemail="08606d646467486d65696164266b6765">[email&#160;protected]</span></a>
+          <a href="mailto:studio.zip.md@gmail.com">studio.zip.md@gmail.com</a>
           <div class="about-social">
             <a href="https://instagram.com/" target="_blank" class="social-icon-link" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -619,14 +629,23 @@ function animateTrail() {
   }
 
   ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-  ctx.strokeStyle = 'rgba(0,0,0,0.5)';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = 'rgba(30, 100, 255, 0.7)';
+  ctx.lineWidth = 5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.stroke();
 }
 
 animateTrail();
+
+function mobileCatChange(sel) {
+  const val = sel.value;
+  if (!val) {
+    setCategory('', null);
+  } else {
+    setCategory(val, null);
+  }
+}
 </script>
 </body>
 </html>
