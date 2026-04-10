@@ -46,7 +46,10 @@ collections:
         label_singular: "이미지"
         allow_add: true
         collapsed: false
-        field:
-          label: "이미지"
-          name: "image"
-          widget: "image"
+        fields:
+          - { label: "이미지 1", name: "image", widget: "image" }
+          - label: "이미지 2 (선택 – 옆에 나란히 표시)"
+            name: "image2"
+            widget: "image"
+            required: false
+            hint: "입력하면 이미지 1과 2열로 나란히 표시됩니다. 비워두면 이미지 1만 단독 표시."
