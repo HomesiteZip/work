@@ -41,7 +41,9 @@
 
   <div class="filter-bar" id="filterBar">
     <div class="filter-inner">
-      <div class="filter-group category-group">
+
+      <!-- ── DESKTOP: 카테고리 버튼 목록 ── -->
+      <div class="filter-group category-group desktop-only">
         <label style="font-weight: 700; color: var(--text); cursor: pointer;" onclick="setCategory('', null)">CATEGORY</label>
         <div class="category-list">
           <button class="cat-filter-btn" data-cat="GRAPHIC" onclick="setCategory('GRAPHIC', this)">GRAPHIC</button>
@@ -52,19 +54,10 @@
           <button class="cat-filter-btn" data-cat="ILLUSTRATION" onclick="setCategory('ILLUSTRATION', this)">ILLUSTRATION</button>
           <button class="cat-filter-btn" data-cat="ORIGINAL" onclick="setCategory('ORIGINAL', this)">ORIGINAL</button>
         </div>
-        <select class="mobile-cat-select" id="mobileCatSelect" onchange="mobileCatChange(this)">
-          <option value="">CATEGORY</option>
-          <option value="GRAPHIC">GRAPHIC</option>
-          <option value="GOODS">GOODS</option>
-          <option value="EDITORIAL">EDITORIAL</option>
-          <option value="WEB DESIGN">WEB DESIGN</option>
-          <option value="SPACE">SPACE</option>
-          <option value="ILLUSTRATION">ILLUSTRATION</option>
-          <option value="ORIGINAL">ORIGINAL</option>
-        </select>
       </div>
 
-      <div class="filter-right">
+      <!-- ── DESKTOP: YEAR 셀렉트 + 리셋 ── -->
+      <div class="filter-right desktop-only">
         <div class="filter-group">
           <select id="filterYear" onchange="applyFilters()">
             <option value="">YEAR</option>
@@ -89,6 +82,64 @@
           </svg>
         </button>
       </div>
+
+      <!-- ── MOBILE: 커스텀 드롭다운 ── -->
+      <div class="mobile-filter-row">
+
+        <!-- CATEGORY 커스텀 드롭다운 -->
+        <div class="custom-select" id="mobileCatDropdown">
+          <button class="custom-select-btn" type="button" onclick="toggleCustomSelect('mobileCatDropdown')">
+            <span class="custom-select-value" id="mobileCatValue">CATEGORY</span>
+            <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 1l4.5 4.5L10 1"/>
+            </svg>
+          </button>
+          <ul class="custom-select-list" id="mobileCatList">
+            <li data-value="" class="active" onclick="mobileCatSelect('', 'CATEGORY')">CATEGORY</li>
+            <li data-value="GRAPHIC" onclick="mobileCatSelect('GRAPHIC', 'GRAPHIC')">GRAPHIC</li>
+            <li data-value="GOODS" onclick="mobileCatSelect('GOODS', 'GOODS')">GOODS</li>
+            <li data-value="EDITORIAL" onclick="mobileCatSelect('EDITORIAL', 'EDITORIAL')">EDITORIAL</li>
+            <li data-value="WEB DESIGN" onclick="mobileCatSelect('WEB DESIGN', 'WEB DESIGN')">WEB DESIGN</li>
+            <li data-value="SPACE" onclick="mobileCatSelect('SPACE', 'SPACE')">SPACE</li>
+            <li data-value="ILLUSTRATION" onclick="mobileCatSelect('ILLUSTRATION', 'ILLUSTRATION')">ILLUSTRATION</li>
+            <li data-value="ORIGINAL" onclick="mobileCatSelect('ORIGINAL', 'ORIGINAL')">ORIGINAL</li>
+          </ul>
+        </div>
+
+        <!-- YEAR 커스텀 드롭다운 -->
+        <div class="custom-select" id="mobileYearDropdown">
+          <button class="custom-select-btn" type="button" onclick="toggleCustomSelect('mobileYearDropdown')">
+            <span class="custom-select-value" id="mobileYearValue">YEAR</span>
+            <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 1l4.5 4.5L10 1"/>
+            </svg>
+          </button>
+          <ul class="custom-select-list" id="mobileYearList">
+            <li data-value="" class="active" onclick="mobileYearSelect('', 'YEAR')">YEAR</li>
+            <li data-value="before2017" onclick="mobileYearSelect('before2017', 'Before 2017')">Before 2017</li>
+            <li data-value="2017" onclick="mobileYearSelect('2017', '2017')">2017</li>
+            <li data-value="2018" onclick="mobileYearSelect('2018', '2018')">2018</li>
+            <li data-value="2019" onclick="mobileYearSelect('2019', '2019')">2019</li>
+            <li data-value="2020" onclick="mobileYearSelect('2020', '2020')">2020</li>
+            <li data-value="2021" onclick="mobileYearSelect('2021', '2021')">2021</li>
+            <li data-value="2022" onclick="mobileYearSelect('2022', '2022')">2022</li>
+            <li data-value="2023" onclick="mobileYearSelect('2023', '2023')">2023</li>
+            <li data-value="2024" onclick="mobileYearSelect('2024', '2024')">2024</li>
+            <li data-value="2025" onclick="mobileYearSelect('2025', '2025')">2025</li>
+            <li data-value="2026" onclick="mobileYearSelect('2026', '2026')">2026</li>
+          </ul>
+        </div>
+
+        <!-- 리셋 버튼 -->
+        <button class="mobile-reset-btn" onclick="resetFilters()" aria-label="필터 초기화">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </button>
+
+      </div>
+
     </div>
   </div>
 
@@ -480,9 +531,53 @@ function applyFilters() {
 
 function resetFilters() {
   document.getElementById('filterYear').value = '';
-  const mobileSelect = document.getElementById('mobileCatSelect');
-  if (mobileSelect) mobileSelect.value = '';
+  // 모바일 커스텀 드롭다운 초기화
+  const catVal = document.getElementById('mobileCatValue');
+  const yearVal = document.getElementById('mobileYearValue');
+  if (catVal) catVal.textContent = 'CATEGORY';
+  if (yearVal) yearVal.textContent = 'YEAR';
+  document.querySelectorAll('.custom-select-list li').forEach(li => {
+    li.classList.toggle('active', li.dataset.value === '');
+  });
   setCategory('');
+}
+
+// ───────────────────────────────────────────────
+// MOBILE CUSTOM DROPDOWN
+// ───────────────────────────────────────────────
+function toggleCustomSelect(id) {
+  const dd = document.getElementById(id);
+  const isOpen = dd.classList.contains('open');
+  // 다른 드롭다운 닫기
+  document.querySelectorAll('.custom-select').forEach(el => el.classList.remove('open'));
+  if (!isOpen) dd.classList.add('open');
+}
+
+// 바깥 클릭 시 닫기
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.custom-select')) {
+    document.querySelectorAll('.custom-select').forEach(el => el.classList.remove('open'));
+  }
+});
+
+function mobileCatSelect(val, label) {
+  currentSelectedCategory = val;
+  document.getElementById('mobileCatValue').textContent = label;
+  document.querySelectorAll('#mobileCatList li').forEach(li => {
+    li.classList.toggle('active', li.dataset.value === val);
+  });
+  document.getElementById('mobileCatDropdown').classList.remove('open');
+  applyFilters();
+}
+
+function mobileYearSelect(val, label) {
+  document.getElementById('filterYear').value = val;
+  document.getElementById('mobileYearValue').textContent = label;
+  document.querySelectorAll('#mobileYearList li').forEach(li => {
+    li.classList.toggle('active', li.dataset.value === val);
+  });
+  document.getElementById('mobileYearDropdown').classList.remove('open');
+  applyFilters();
 }
 
 function isMobile() { return window.innerWidth <= 768; }
@@ -683,15 +778,6 @@ function animateTrail() {
 }
 
 animateTrail();
-
-function mobileCatChange(sel) {
-  const val = sel.value;
-  if (!val) {
-    setCategory('', null);
-  } else {
-    setCategory(val, null);
-  }
-}
 </script>
 </body>
 </html>

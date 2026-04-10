@@ -779,10 +779,72 @@ textarea { resize: vertical; }
   gap: 3px;
 }
 
-/* ─── Mobile Category Dropdown ─── */
-.mobile-cat-select {
-  display: none;
+/* ─── Mobile Category Dropdown (구형 select - 사용 안 함) ─── */
+.mobile-cat-select { display: none; }
+
+/* ─── 모바일 커스텀 드롭다운 (기본: 숨김) ─── */
+.mobile-filter-row { display: none; }
+
+/* ─── 커스텀 셀렉트 공통 스타일 ─── */
+.custom-select { position: relative; }
+
+.custom-select-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--text);
+  padding: 4px 0;
+  font-family: var(--font-sans);
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  color: var(--text3);
+  width: 100%;
+  cursor: pointer;
+  outline: none;
 }
+
+.custom-select-arrow {
+  flex-shrink: 0;
+  transition: transform 0.2s;
+  color: var(--text);
+}
+
+.custom-select.open .custom-select-arrow {
+  transform: rotate(180deg);
+}
+
+.custom-select-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  z-index: 400;
+  min-width: 160px;
+  list-style: none;
+  padding: 4px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+}
+
+.custom-select.open .custom-select-list { display: block; }
+
+.custom-select-list li {
+  padding: 10px 18px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  letter-spacing: -0.02em;
+  color: var(--text2);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.custom-select-list li:hover { background: var(--bg2); color: var(--text); }
+.custom-select-list li.active { color: var(--text); font-weight: 600; }
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
@@ -811,9 +873,7 @@ textarea { resize: vertical; }
     justify-content: flex-start;
   }
 
-  .detail-header h1 {
-    width: 100%;
-  }
+  .detail-header h1 { width: 100%; }
 
   .detail-texts {
     width: 100%;
@@ -831,74 +891,39 @@ textarea { resize: vertical; }
   .about-section h1 { font-size: 30px; }
   .form-row.two-col { grid-template-columns: 1fr; }
 
-  /* 모바일 화면에서는 마우스 라인 효과 숨김 */
   .mouse-trail { display: none; }
 
   .admin-layout { grid-template-columns: 1fr; }
   .admin-sidebar { position: static; height: auto; }
 
-  /* ── 모바일 필터 바 레이아웃 ── */
-  .filter-inner {
-    justify-content: flex-start;
-    gap: 0;
-  }
+  /* ── 데스크탑 필터 숨김 ── */
+  .desktop-only { display: none !important; }
 
-  /* category-group: 텍스트 라벨 숨기고 드롭다운만 표시, 절반 폭 */
-  .category-group {
-    flex: 1;
-    margin-right: 0;
-    overflow: visible;
-    gap: 0;
-  }
-
-  /* 데스크탑 CATEGORY 텍스트 라벨 모바일에서 숨김 */
-  .category-group > label {
-    display: none;
-  }
-
-  /* 버튼 목록 숨김 */
-  .category-list { display: none; }
-
-  /* 모바일 카테고리 드롭다운 */
-  .mobile-cat-select {
-    display: block;
-    font-family: var(--font-sans);
-    font-size: 18px;
-    letter-spacing: -0.03em;
-    color: var(--text3);
-    background: transparent;
-    border: none;
-    padding: 3px 22px 3px 0;
-    cursor: pointer;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23555' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0px center;
+  /* ── 모바일 커스텀 드롭다운 행 ── */
+  .mobile-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
     width: 100%;
   }
-  .mobile-cat-select:focus { outline: none; }
 
-  /* YEAR 그룹: 절반 폭, 간격 제거 */
-  .filter-right {
+  /* CATEGORY / YEAR 각각 균등 폭 */
+  .mobile-filter-row .custom-select {
     flex: 1;
-    gap: 0;
+  }
+
+  /* 리셋 버튼 */
+  .mobile-reset-btn {
     flex-shrink: 0;
-  }
-
-  .filter-right .filter-group {
-    width: 100%;
-  }
-
-  /* YEAR select 동일 폭 */
-  #filterYear {
-    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
     color: var(--text3);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.2s;
   }
-  #filterYear:focus { outline: none; border-color: transparent; }
-
-  /* 리셋 버튼 모바일에서 숨김 */
-  .filter-reset { display: none; }
+  .mobile-reset-btn:hover { color: var(--text); }
 }
  
