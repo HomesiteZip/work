@@ -177,7 +177,8 @@ nav {
 
 .filter-group select {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 18px;
+  letter-spacing: -0.03em;
   color: var(--text);
   background: transparent;
   border: none;
@@ -771,6 +772,13 @@ textarea { resize: vertical; }
   border-radius: 4px; margin-top: 8px;
 }
 
+/* ─── 2-column 이미지 페어 ─── */
+.detail-image-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
+
 /* ─── Mobile Category Dropdown ─── */
 .mobile-cat-select {
   display: none;
@@ -823,26 +831,40 @@ textarea { resize: vertical; }
   .about-section h1 { font-size: 30px; }
   .form-row.two-col { grid-template-columns: 1fr; }
 
-  .filter-right { gap: 12px; }
-
   /* 모바일 화면에서는 마우스 라인 효과 숨김 */
   .mouse-trail { display: none; }
 
   .admin-layout { grid-template-columns: 1fr; }
   .admin-sidebar { position: static; height: auto; }
 
-  /* 모바일: 카테고리 버튼 목록 숨기고 드롭다운으로 대체 */
+  /* ── 모바일 필터 바 레이아웃 ── */
+  .filter-inner {
+    justify-content: flex-start;
+    gap: 24px;
+  }
+
+  /* category-group: 라벨 + 모바일 셀렉트만 표시 */
+  .category-group {
+    flex: 0;
+    margin-right: 0;
+    overflow: visible;
+    gap: 6px;
+  }
+
+  /* 버튼 목록 숨김 */
   .category-list { display: none; }
 
+  /* 모바일 카테고리 드롭다운 */
   .mobile-cat-select {
     display: block;
     font-family: var(--font-sans);
-    font-size: 14px;
-    color: var(--text);
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    color: var(--text3);
     background: transparent;
     border: none;
     border-bottom: 1px solid transparent;
-    padding: 3px 22px 3px 0;
+    padding: 3px 20px 3px 0;
     cursor: pointer;
     outline: none;
     appearance: none;
@@ -850,11 +872,20 @@ textarea { resize: vertical; }
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23555' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0px center;
-    transition: border-color 0.2s;
-    max-width: 140px;
   }
 
-  .mobile-cat-select:hover { border-color: var(--text2); }
-  .mobile-cat-select:focus { border-color: var(--text); outline: none; }
+  /* YEAR 그룹: 간격 줄이기 */
+  .filter-right {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  /* 리셋 버튼 모바일에서 숨김 */
+  .filter-reset { display: none; }
+
+  /* 모바일에서 YEAR 라벨 텍스트 색상 */
+  .filter-right .filter-group label {
+    color: var(--text3);
+  }
 }
  

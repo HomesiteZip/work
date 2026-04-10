@@ -4,6 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studio Zip Portfolio</title>
+
+<!-- ─── Favicon ─── -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<!-- ─── SNS / 링크 공유 썸네일 (OG Tags) ─── -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Studio Zip">
+<meta property="og:title" content="Studio Zip Portfolio">
+<meta property="og:description" content="브랜딩, 그래픽, 굿즈, 에디토리얼 디자인을 중심으로 활동하는 Studio Zip의 포트폴리오입니다.">
+<meta property="og:image" content="https://YOUR_OG_IMAGE_URL.jpg">
+<meta property="og:url" content="https://stwork.netlify.app">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Studio Zip Portfolio">
+<meta name="twitter:description" content="브랜딩, 그래픽, 굿즈, 에디토리얼 디자인을 중심으로 활동하는 Studio Zip의 포트폴리오입니다.">
+<meta name="twitter:image" content="https://YOUR_OG_IMAGE_URL.jpg">
+
 <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -279,24 +296,36 @@ function parseFrontmatter(raw) {
       const list = [];
       i++;
       while (i < lines.length && /^\s+-/.test(lines[i])) {
-        const itemRaw = lines[i].trim().replace(/^-\s*/, '');
-        // "key: value" 형태 (ex: image: /path.jpg)
-        const subColon = itemRaw.indexOf(':');
+        const itemStart = lines[i].trim().replace(/^-\s*/, '');
+        const subColon = itemStart.indexOf(':');
         if (subColon !== -1) {
-          const subKey = itemRaw.slice(0, subColon).trim();
-          const subVal = itemRaw.slice(subColon + 1).trim().replace(/^["']|["']$/g, '');
-          // images 리스트: image 키의 값을 꺼냄
-          if (subKey === 'image' || subKey === key) {
-            list.push(subVal);
-          } else {
-            list.push(subVal || itemRaw);
-          }
-          // 같은 아이템의 추가 들여쓰기 줄 스킵
+          const firstKey = itemStart.slice(0, subColon).trim();
+          const firstVal = itemStart.slice(subColon + 1).trim().replace(/^["']|["']$/g, '');
+          const obj = {};
+          if (firstKey) obj[firstKey] = firstVal;
           i++;
-          while (i < lines.length && /^\s{4,}/.test(lines[i])) i++;
+          // 같은 아이템의 추가 들여쓰기 필드 수집 (- 로 시작하지 않는 들여쓰기 줄)
+          while (i < lines.length && /^\s{4,}/.test(lines[i]) && !/^\s*-\s/.test(lines[i])) {
+            const subLine = lines[i].trim();
+            const sc = subLine.indexOf(':');
+            if (sc !== -1) {
+              const sk = subLine.slice(0, sc).trim();
+              const sv = subLine.slice(sc + 1).trim().replace(/^["']|["']$/g, '');
+              obj[sk] = sv;
+            }
+            i++;
+          }
+          const keys = Object.keys(obj);
+          if (keys.length === 1 && (keys[0] === 'image' || keys[0] === key)) {
+            list.push(obj[keys[0]]);
+          } else if (keys.length > 1) {
+            list.push(obj); // image + image2 등 다중 필드 → 객체로 저장
+          } else {
+            list.push(firstVal || itemStart);
+          }
         } else {
           // 단순 스칼라 값 (ex: - GRAPHIC)
-          list.push(itemRaw.replace(/^["']|["']$/g, ''));
+          list.push(itemStart.replace(/^["']|["']$/g, ''));
           i++;
         }
       }
@@ -356,12 +385,22 @@ async function loadPortfolioFromGitHub() {
       // 본문 텍스트 블록
       const content = parseBody(Array.isArray(fm.body) ? fm.body.join('\n') : (fm.body || ''));
 
-      // images 리스트 → content에 추가
+      // images 리스트 → content에 추가 (단일 or 2-column 페어 지원)
       const imgList = Array.isArray(fm.images) ? fm.images : [];
-      imgList.forEach(src => {
-        if (!src) return;
-        const fullSrc = src.startsWith('http') ? src : IMAGE_BASE + src.replace(/^\//, '');
-        content.push({ type: 'image', value: fullSrc, caption: '' });
+      imgList.forEach(item => {
+        if (!item) return;
+        if (typeof item === 'string') {
+          const fullSrc = item.startsWith('http') ? item : IMAGE_BASE + item.replace(/^\//, '');
+          content.push({ type: 'image', value: fullSrc, caption: '' });
+        } else if (typeof item === 'object') {
+          const src1 = item.image ? (item.image.startsWith('http') ? item.image : IMAGE_BASE + item.image.replace(/^\//, '')) : null;
+          const src2 = item.image2 ? (item.image2.startsWith('http') ? item.image2 : IMAGE_BASE + item.image2.replace(/^\//, '')) : null;
+          if (src1 && src2) {
+            content.push({ type: 'image-pair', value: src1, value2: src2 });
+          } else if (src1) {
+            content.push({ type: 'image', value: src1, caption: '' });
+          }
+        }
       });
 
       return {
@@ -442,6 +481,8 @@ function applyFilters() {
 
 function resetFilters() {
   document.getElementById('filterYear').value = '';
+  const mobileSelect = document.getElementById('mobileCatSelect');
+  if (mobileSelect) mobileSelect.value = '';
   setCategory('');
 }
 
@@ -449,9 +490,15 @@ function isMobile() { return window.innerWidth <= 768; }
 
 function buildDetailHTML(p) {
   const texts = p.content.filter(b => b.type === 'text').map(b => `<p class="detail-text">${b.value}</p>`).join('');
-  const images = p.content.filter(b => b.type === 'image').map(b =>
-    `<figure class="detail-figure"><img src="${b.value}" alt="${b.caption||''}"></figure>`
-  ).join('');
+  const images = p.content.filter(b => b.type === 'image' || b.type === 'image-pair').map(b => {
+    if (b.type === 'image-pair') {
+      return `<div class="detail-image-pair">
+        <figure class="detail-figure"><img src="${b.value}" alt=""></figure>
+        <figure class="detail-figure"><img src="${b.value2}" alt=""></figure>
+      </div>`;
+    }
+    return `<figure class="detail-figure"><img src="${b.value}" alt="${b.caption||''}"></figure>`;
+  }).join('');
 
   const yearOnly = p.date.substring(0, 4);
   const cats = Array.isArray(p.category) ? p.category : [p.category];
