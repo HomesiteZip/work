@@ -194,8 +194,8 @@ nav {
   transition: border-color 0.2s;
 }
 
-.filter-group select:hover { border-color: var(--text2); }
-.filter-group select:focus { border-color: var(--text); outline: none; }
+.filter-group select:hover { border-color: transparent; }
+.filter-group select:focus { border-color: transparent; outline: none; }
 
 .filter-reset {
   display: flex;
@@ -840,15 +840,20 @@ textarea { resize: vertical; }
   /* ── 모바일 필터 바 레이아웃 ── */
   .filter-inner {
     justify-content: flex-start;
-    gap: 24px;
+    gap: 0;
   }
 
-  /* category-group: 라벨 + 모바일 셀렉트만 표시 */
+  /* category-group: 텍스트 라벨 숨기고 드롭다운만 표시, 절반 폭 */
   .category-group {
-    flex: 0;
+    flex: 1;
     margin-right: 0;
     overflow: visible;
-    gap: 6px;
+    gap: 0;
+  }
+
+  /* 데스크탑 CATEGORY 텍스트 라벨 모바일에서 숨김 */
+  .category-group > label {
+    display: none;
   }
 
   /* 버튼 목록 숨김 */
@@ -863,8 +868,7 @@ textarea { resize: vertical; }
     color: var(--text3);
     background: transparent;
     border: none;
-    border-bottom: 1px solid transparent;
-    padding: 3px 20px 3px 0;
+    padding: 3px 22px 3px 0;
     cursor: pointer;
     outline: none;
     appearance: none;
@@ -872,20 +876,29 @@ textarea { resize: vertical; }
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23555' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0px center;
+    width: 100%;
   }
+  .mobile-cat-select:focus { outline: none; }
 
-  /* YEAR 그룹: 간격 줄이기 */
+  /* YEAR 그룹: 절반 폭, 간격 제거 */
   .filter-right {
-    gap: 6px;
+    flex: 1;
+    gap: 0;
     flex-shrink: 0;
   }
 
-  /* 리셋 버튼 모바일에서 숨김 */
-  .filter-reset { display: none; }
+  .filter-right .filter-group {
+    width: 100%;
+  }
 
-  /* 모바일에서 YEAR 라벨 텍스트 색상 */
-  .filter-right .filter-group label {
+  /* YEAR select 동일 폭 */
+  #filterYear {
+    width: 100%;
     color: var(--text3);
   }
+  #filterYear:focus { outline: none; border-color: transparent; }
+
+  /* 리셋 버튼 모바일에서 숨김 */
+  .filter-reset { display: none; }
 }
  
