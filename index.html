@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Studio Zip Portfolio</title>
-<link href="[https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css](https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css)" rel="stylesheet">
-<!-- 분리된 style.css 파일을 불러옵니다 -->
+<link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script src="[https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js](https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js)"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
@@ -112,14 +111,14 @@
           작업 의뢰나 협업 제안은 아래 폼을 통해 편하게 연락 주세요.
         </p>
         <div class="about-links">
-          <a href="mailto:your@gmail.com">your@gmail.com</a>
+          <a href="mailto:hello@email.com">hello@email.com</a>
           <div class="about-social">
-            <a href="[https://instagram.com/](https://instagram.com/)" target="_blank" class="social-icon-link" aria-label="Instagram">
+            <a href="https://instagram.com/" target="_blank" class="social-icon-link" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
               </svg>
             </a>
-            <a href="[https://x.com/](https://x.com/)" target="_blank" class="social-icon-link" aria-label="X">
+            <a href="https://x.com/" target="_blank" class="social-icon-link" aria-label="X">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
@@ -208,55 +207,11 @@
   </main>
 </div>
 
-<!-- ================= ADMIN VIEW ================= -->
-<div id="view-admin" class="view-container">
-  <div id="loginScreen" class="login-screen">
-    <div class="login-box">
-      <h1>관리자 로그인</h1>
-      <div class="form-group">
-        <label for="adminPw">비밀번호</label>
-        <input type="password" id="adminPw" placeholder="비밀번호 입력 (기본: your_password_here)"
-               onkeydown="if(event.key==='Enter') login()">
-      </div>
-      <button onclick="login()" class="submit-btn" style="width:100%;margin-top:8px;">로그인</button>
-      <p id="loginError" class="error-msg" style="display:none;">비밀번호가 올바르지 않습니다.</p>
-      
-      <button onclick="switchView('index')" class="submit-btn" style="background:var(--bg2); color:var(--text); margin-top:12px;">← 홈으로 돌아가기</button>
-    </div>
-  </div>
-
-  <div id="adminPanel" style="display:none;">
-    <header class="admin-header">
-      <span class="logo">CMS 관리자</span>
-      <div style="display:flex;gap:12px;align-items:center;">
-        <a href="#" onclick="switchView('index'); return false;" class="preview-link">사이트 미리보기 →</a>
-        <button onclick="logout()" class="logout-btn">로그아웃</button>
-      </div>
-    </header>
-
-    <div class="admin-layout">
-      <aside class="admin-sidebar">
-        <div class="sidebar-header">
-          <h2>프로젝트</h2>
-          <button onclick="newProject()" class="add-btn">+ 추가</button>
-        </div>
-        <ul id="projectList" class="project-list"></ul>
-      </aside>
-
-      <div class="admin-editor" id="editorArea">
-        <div class="editor-empty">
-          <p>왼쪽에서 프로젝트를 선택하거나<br>새 프로젝트 추가하세요.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- ─── Mouse Trail Canvas ─── -->
 <canvas id="mouseTrailCanvas" class="mouse-trail"></canvas>
 
 <script>
-  //관리자 로그인 추가
+  // Netlify Identity - admin 리디렉션
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", user => {
       if (!user) {
@@ -266,18 +221,14 @@
       }
     });
   }
-  
-// SPA Navigation System
+
+// ───────────────────────────────────────────────
+// SPA Navigation
+// ───────────────────────────────────────────────
 function switchView(viewId) {
   document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
   document.getElementById('view-' + viewId).classList.add('active');
   window.scrollTo(0, 0);
-
-  if (viewId === 'admin') {
-    document.body.classList.add('admin-body');
-  } else {
-    document.body.classList.remove('admin-body');
-  }
 
   if (viewId === 'index') {
     allProjects = getProjects();
@@ -291,32 +242,32 @@ function switchView(viewId) {
 function getProjects() {
   const saved = localStorage.getItem('portfolio_projects');
   if (saved) return JSON.parse(saved);
-  
+
   return [
-    { id:1, title:"브랜드 아이덴티티 프로젝트", category: ["GRAPHIC", "EDITORIAL"], thumbnail:"[https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80](https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80)", date:"2024.03", year:"2024",
-      content:[ {type:"text",value:"클라이언트의 브랜드 정체성을 재정립하는 프로젝트였습니다. 로고, 컬러 시스템, 타이포그래피를 포함한 전체적인 비주얼 아이덴티티를 디자인했습니다. 브랜드 컬러는 신뢰감과 전문성을 강조하는 딥 네이비와 골드 조합을 채택했으며, 모든 터치포인트에서 일관된 경험을 제공하도록 설계되었습니다."},
-        {type:"image",value:"[https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80](https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80)",caption:"메인 로고 디자인"},
-        {type:"image",value:"[https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80](https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80)",caption:"브랜드 컬러 시스템"} ] },
-    { id:2, title:"모바일 앱 UI/UX 디자인", category: ["WEB DESIGN"], thumbnail:"[https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80](https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80)", date:"2024.01", year:"2024",
-      content:[ {type:"text",value:"헬스케어 스타트업의 모바일 앱 전체 UI/UX를 담당했습니다. 사용자 리서치부터 프로토타이핑까지 전 과정을 진행했습니다. 핵심 목표는 복잡한 의료 정보를 직관적으로 표현하는 것이었습니다."},
-        {type:"image",value:"[https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80](https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80)",caption:"앱 메인 화면"} ] },
-    { id:3, title:"패키지 디자인", category: ["GOODS", "GRAPHIC"], thumbnail:"[https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80](https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80)", date:"2023.11", year:"2023",
-      content:[ {type:"text",value:"친환경 뷰티 브랜드의 패키지 라인업 전체를 디자인했습니다. 지속가능성과 프리미엄 감성을 동시에 담아내는 것이 핵심 챌린지였습니다."},
-        {type:"image",value:"[https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80](https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80)",caption:"패키지 라인업"} ] },
-    { id:4, title:"웹사이트 리디자인", category: ["WEB DESIGN", "ORIGINAL"], thumbnail:"[https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80](https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80)", date:"2023.09", year:"2023",
-      content:[ {type:"text",value:"레거시 기업의 웹사이트를 현대적으로 리디자인하는 프로젝트입니다. 브랜드의 전통성을 유지하면서도 디지털 환경에 맞는 UX를 구현했습니다."},
-        {type:"image",value:"[https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80](https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80)",caption:"리디자인 메인 페이지"} ] },
-    { id:5, title:"포스터 캠페인", category: ["EDITORIAL", "ILLUSTRATION"], thumbnail:"[https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80](https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80)", date:"2022.07", year:"2022",
-      content:[ {type:"text",value:"문화 기관의 연간 전시 포스터 시리즈를 제작했습니다. 각 전시의 특성을 시각적으로 표현하면서도 브랜드 통일성을 유지했습니다."},
-        {type:"image",value:"[https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80](https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80)",caption:"포스터 시리즈"} ] },
-    { id:6, title:"타이포그래피 실험", category: ["EDITORIAL"], thumbnail:"[https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80](https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80)", date:"2016.05", year:"before2017",
-      content:[ {type:"text",value:"개인 프로젝트로 진행한 타이포그래피 실험 시리즈입니다. 한글과 영문을 함께 사용하는 독자적인 레이아웃 시스템을 탐구했습니다."},
-        {type:"image",value:"[https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80](https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80)",caption:"타이포그래피 실험 작품"} ] }
+    { id:1, title:"브랜드 아이덴티티 프로젝트", category: ["GRAPHIC", "EDITORIAL"], thumbnail:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", date:"2024.03", year:"2024",
+      content:[ {type:"text",value:"클라이언트의 브랜드 정체성을 재정립하는 프로젝트였습니다. 로고, 컬러 시스템, 타이포그래피를 포함한 전체적인 비주얼 아이덴티티를 디자인했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80",caption:"메인 로고 디자인"},
+        {type:"image",value:"https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=80",caption:"브랜드 컬러 시스템"} ] },
+    { id:2, title:"모바일 앱 UI/UX 디자인", category: ["WEB DESIGN"], thumbnail:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80", date:"2024.01", year:"2024",
+      content:[ {type:"text",value:"헬스케어 스타트업의 모바일 앱 전체 UI/UX를 담당했습니다. 사용자 리서치부터 프로토타이핑까지 전 과정을 진행했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=900&q=80",caption:"앱 메인 화면"} ] },
+    { id:3, title:"패키지 디자인", category: ["GOODS", "GRAPHIC"], thumbnail:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80", date:"2023.11", year:"2023",
+      content:[ {type:"text",value:"친환경 뷰티 브랜드의 패키지 라인업 전체를 디자인했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=900&q=80",caption:"패키지 라인업"} ] },
+    { id:4, title:"웹사이트 리디자인", category: ["WEB DESIGN", "ORIGINAL"], thumbnail:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80", date:"2023.09", year:"2023",
+      content:[ {type:"text",value:"레거시 기업의 웹사이트를 현대적으로 리디자인하는 프로젝트입니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80",caption:"리디자인 메인 페이지"} ] },
+    { id:5, title:"포스터 캠페인", category: ["EDITORIAL", "ILLUSTRATION"], thumbnail:"https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80", date:"2022.07", year:"2022",
+      content:[ {type:"text",value:"문화 기관의 연간 전시 포스터 시리즈를 제작했습니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=900&q=80",caption:"포스터 시리즈"} ] },
+    { id:6, title:"타이포그래피 실험", category: ["EDITORIAL"], thumbnail:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80", date:"2016.05", year:"before2017",
+      content:[ {type:"text",value:"개인 프로젝트로 진행한 타이포그래피 실험 시리즈입니다."},
+        {type:"image",value:"https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80",caption:"타이포그래피 실험 작품"} ] }
   ];
 }
 
 let allProjects = getProjects();
-let currentSelectedCategory = ''; // 현재 선택된 카테고리를 저장하는 변수
+let currentSelectedCategory = '';
 
 function renderGallery(projects) {
   const grid = document.getElementById('galleryGrid');
@@ -340,24 +291,16 @@ function renderGallery(projects) {
   }).join('');
 }
 
-// 카테고 버튼 클릭 시 호출
 function setCategory(cat, btnElement) {
   currentSelectedCategory = cat;
-  
-  // 모든 카테고리 버튼에서 active 클래스 제거
   document.querySelectorAll('.cat-filter-btn').forEach(btn => btn.classList.remove('active'));
-  
-  if(btnElement) {
-    btnElement.classList.add('active');
-  }
-  
+  if (btnElement) btnElement.classList.add('active');
   applyFilters();
 }
 
 function applyFilters() {
   const year = document.getElementById('filterYear').value;
   const cat  = currentSelectedCategory;
-  
   let f = allProjects;
   if (year) f = f.filter(p => p.year === year);
   if (cat)  f = f.filter(p => Array.isArray(p.category) ? p.category.includes(cat) : p.category === cat);
@@ -378,7 +321,6 @@ function buildDetailHTML(p) {
   ).join('');
 
   const yearOnly = p.date.substring(0, 4);
-  
   const cats = Array.isArray(p.category) ? p.category : [p.category];
   const catTags = cats.map(c => `<span class="cat-badge" data-category="${c}">${c}</span>`).join('');
 
@@ -387,9 +329,7 @@ function buildDetailHTML(p) {
       <h1>${p.title}</h1>
       <div class="detail-meta">
         <span class="detail-date">${yearOnly}</span>
-        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-          ${catTags}
-        </div>
+        <div style="display: flex; gap: 6px; flex-wrap: wrap;">${catTags}</div>
       </div>
     </div>
     <div class="detail-body">
@@ -402,10 +342,7 @@ function buildDetailHTML(p) {
 function openDetail(id) {
   const p = allProjects.find(x => x.id === id);
   if (!p) return;
-
-  const html = buildDetailHTML(p);
-  document.getElementById('detailContent').innerHTML = html;
-  
+  document.getElementById('detailContent').innerHTML = buildDetailHTML(p);
   switchView('detail');
 }
 
@@ -413,9 +350,9 @@ function closeDetail() {
   switchView('index');
 }
 
-document.addEventListener('keydown', e => { 
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && document.getElementById('view-detail').classList.contains('active')) {
-    closeDetail(); 
+    closeDetail();
   }
 });
 
@@ -459,15 +396,14 @@ function getCheckedCategories() {
 }
 
 function checkForm() {
-  const name    = document.getElementById('name').value.trim();
-  const phone   = document.getElementById('phone').value.trim();
-  const email   = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+  const name     = document.getElementById('name').value.trim();
+  const phone    = document.getElementById('phone').value.trim();
+  const email    = document.getElementById('email').value.trim();
+  const message  = document.getElementById('message').value.trim();
   const schedule = document.getElementById('schedule').value.trim();
-  const cats    = getCheckedCategories();
+  const cats     = getCheckedCategories();
   const detailCat = document.querySelector('input[name="detail_category"]:checked');
-  const budget = document.querySelector('input[name="budget"]:checked');
-  
+  const budget    = document.querySelector('input[name="budget"]:checked');
   document.getElementById('submitBtn').disabled = !(name && phone.length>=12 && isEmailValid(email) && cats.length && detailCat && budget && schedule && message);
 }
 
@@ -476,23 +412,23 @@ function sendEmail() {
   btn.disabled = true;
   document.getElementById('btnText').textContent = '전송 중...';
   const detailCat = document.querySelector('input[name="detail_category"]:checked').value;
-  const budget = document.querySelector('input[name="budget"]:checked').value;
-  const schedule = document.getElementById('schedule').value;
+  const budget    = document.querySelector('input[name="budget"]:checked').value;
+  const schedule  = document.getElementById('schedule').value;
   const attachment = document.getElementById('attachment').files[0];
   const attachName = attachment ? attachment.name : '첨부파일 없음';
 
   const params = {
-    from_name: document.getElementById('name').value,
-    phone:     document.getElementById('phone').value,
-    email:     document.getElementById('email').value,
-    category:  getCheckedCategories().join(', '),
+    from_name:       document.getElementById('name').value,
+    phone:           document.getElementById('phone').value,
+    email:           document.getElementById('email').value,
+    category:        getCheckedCategories().join(', '),
     detail_category: detailCat,
-    budget: budget,
-    schedule: schedule,
+    budget:          budget,
+    schedule:        schedule,
     attachment_name: attachName,
-    message:   document.getElementById('message').value
+    message:         document.getElementById('message').value
   };
-  
+
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
     .then(() => {
       document.getElementById('formWrap').style.display = 'none';
@@ -509,226 +445,15 @@ function sendEmail() {
 function resetForm() {
   ['name','phone','email','schedule','message','attachment'].forEach(id => {
     const el = document.getElementById(id);
-    if(el) el.value = '';
+    if (el) el.value = '';
   });
-  document.querySelectorAll('.checkbox-grid input').forEach(el => el.checked=false);
-  document.getElementById('formWrap').style.display='block';
-  document.getElementById('successMsg').style.display='none';
-  document.getElementById('submitBtn').disabled=true;
-  document.getElementById('btnText').textContent='문의 보내기';
+  document.querySelectorAll('.checkbox-grid input').forEach(el => el.checked = false);
+  document.getElementById('formWrap').style.display = 'block';
+  document.getElementById('successMsg').style.display = 'none';
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('btnText').textContent = '문의 보내기';
   document.getElementById('emailError').classList.remove('visible');
   document.getElementById('email').classList.remove('input-error');
-}
-
-// ───────────────────────────────────────────────
-// ADMIN JS
-// ───────────────────────────────────────────────
-const ADMIN_PASSWORD = 'your_password_here';
-
-let adminProjectsList = [];
-let editingId = null;
-let blockCounter = 0;
-
-function login() {
-  const pw = document.getElementById('adminPw').value;
-  if (pw === ADMIN_PASSWORD) {
-    sessionStorage.setItem('admin_auth', '1');
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    loadProjects();
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-  }
-}
-
-function logout() {
-  sessionStorage.removeItem('admin_auth');
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('adminPanel').style.display = 'none';
-}
-
-if (sessionStorage.getItem('admin_auth') === '1') {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminPanel').style.display = 'block';
-  loadProjects();
-}
-
-function loadProjects() {
-  const saved = localStorage.getItem('portfolio_projects');
-  adminProjectsList = saved ? JSON.parse(saved) : getProjects(); 
-  renderList();
-}
-
-function saveProjects() {
-  localStorage.setItem('portfolio_projects', JSON.stringify(adminProjectsList));
-}
-
-function renderList() {
-  const list = document.getElementById('projectList');
-  list.innerHTML = adminProjectsList.map(p => {
-    const catStr = Array.isArray(p.category) ? p.category.join(', ') : p.category;
-    return `
-    <li class="project-item ${editingId === p.id ? 'active' : ''}" onclick="editProject(${p.id})">
-      <div class="project-item-thumb">
-        <img src="${p.thumbnail}" alt="" onerror="this.style.display='none'">
-      </div>
-      <div class="project-item-info">
-        <strong>${p.title}</strong>
-        <span>${catStr} · ${p.date}</span>
-      </div>
-    </li>
-  `}).join('');
-}
-
-function newProject() {
-  const id = Date.now();
-  const p = {
-    id,
-    title: '새 프로젝트',
-    category: ['GRAPHIC'],
-    thumbnail: '',
-    date: new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'2-digit'}).replace('. ','.').replace('.',''),
-    content: []
-  };
-  adminProjectsList.unshift(p);
-  saveProjects();
-  renderList();
-  editProject(id);
-}
-
-function editProject(id) {
-  editingId = id;
-  renderList();
-  const p = adminProjectsList.find(x => x.id === id);
-  if (!p) return;
-
-  const mainCat = Array.isArray(p.category) ? p.category[0] : p.category;
-
-  document.getElementById('editorArea').innerHTML = `
-    <div class="editor-form">
-      <div class="editor-topbar">
-        <h2>프로젝트 편집</h2>
-        <div style="display:flex;gap:8px;">
-          <button onclick="saveProject()" class="save-btn">저장</button>
-          <button onclick="deleteProject(${id})" class="delete-btn">삭제</button>
-        </div>
-      </div>
-
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>제목</label>
-          <input type="text" id="eTitle" value="${p.title}">
-        </div>
-        <div class="form-group">
-          <label>카테고리</label>
-          <select id="eCategory">
-            ${['GRAPHIC','GOODS','EDITORIAL','WEB DESIGN','SPACE','ILLUSTRATION','ORIGINAL']
-              .map(c => `<option ${mainCat===c?'selected':''}>${c}</option>`).join('')}
-          </select>
-        </div>
-      </div>
-
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>날짜 (예: 2024.03)</label>
-          <input type="text" id="eDate" value="${p.date}">
-        </div>
-        <div class="form-group">
-          <label>썸네일 이미지 URL</label>
-          <input type="text" id="eThumbnail" value="${p.thumbnail}" placeholder="https://...">
-        </div>
-      </div>
-
-      <div class="content-editor">
-        <div class="content-editor-header">
-          <label>상세 콘텐츠 블록</label>
-          <div style="display:flex;gap:8px;">
-            <button onclick="addBlock('text')" class="add-block-btn">+ 텍스트</button>
-            <button onclick="addBlock('image')" class="add-block-btn">+ 이미지</button>
-          </div>
-        </div>
-        <div id="blocksContainer">
-          ${p.content.map((b,i) => renderBlock(b,i)).join('')}
-        </div>
-      </div>
-    </div>
-  `;
-  blockCounter = p.content.length;
-}
-
-function renderBlock(block, idx) {
-  if (block.type === 'text') return `
-    <div class="block-item" data-idx="${idx}" data-type="text">
-      <div class="block-handle">
-        <span class="block-label">텍스트</span>
-        <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
-      </div>
-      <textarea rows="4" id="block_${idx}" oninput="updateBlock(${idx},'text',this.value)">${block.value}</textarea>
-    </div>`;
-  if (block.type === 'image') return `
-    <div class="block-item" data-idx="${idx}" data-type="image">
-      <div class="block-handle">
-        <span class="block-label">이미지</span>
-        <button onclick="removeBlock(${idx})" class="remove-block">✕</button>
-      </div>
-      <input type="text" id="block_${idx}" placeholder="이미지 URL" value="${block.value}"
-             oninput="updateBlock(${idx},'image_url',this.value)">
-      <input type="text" id="block_cap_${idx}" placeholder="캡션 (선택)" value="${block.caption||''}"
-             oninput="updateBlock(${idx},'caption',this.value)" style="margin-top:6px;">
-      ${block.value ? `<img src="${block.value}" class="block-preview" onerror="this.style.display='none'">` : ''}
-    </div>`;
-  return '';
-}
-
-function addBlock(type) {
-  const p = adminProjectsList.find(x => x.id === editingId);
-  if (!p) return;
-  if (type === 'text') p.content.push({ type: 'text', value: '' });
-  if (type === 'image') p.content.push({ type: 'image', value: '', caption: '' });
-  saveProjects();
-  editProject(editingId);
-}
-
-function removeBlock(idx) {
-  const p = adminProjectsList.find(x => x.id === editingId);
-  if (!p) return;
-  p.content.splice(idx, 1);
-  saveProjects();
-  editProject(editingId);
-}
-
-function updateBlock(idx, field, value) {
-  const p = adminProjectsList.find(x => x.id === editingId);
-  if (!p || !p.content[idx]) return;
-  if (field === 'text') p.content[idx].value = value;
-  if (field === 'image_url') p.content[idx].value = value;
-  if (field === 'caption') p.content[idx].caption = value;
-}
-
-function saveProject() {
-  const p = adminProjectsList.find(x => x.id === editingId);
-  if (!p) return;
-  p.title     = document.getElementById('eTitle').value;
-  p.category  = [document.getElementById('eCategory').value]; 
-  p.date      = document.getElementById('eDate').value;
-  p.thumbnail = document.getElementById('eThumbnail').value;
-  saveProjects();
-  renderList();
-
-  const btn = document.querySelector('.save-btn');
-  btn.textContent = '저장됨 ✓';
-  btn.style.background = '#22c55e';
-  btn.style.color = '#fff';
-  setTimeout(() => { btn.textContent = '저장'; btn.style.background = ''; btn.style.color = ''; }, 1500);
-}
-
-function deleteProject(id) {
-  if (!confirm('이 프로젝트를 삭제할까요?')) return;
-  adminProjectsList = adminProjectsList.filter(p => p.id !== id);
-  saveProjects();
-  editingId = null;
-  renderList();
-  document.getElementById('editorArea').innerHTML = `<div class="editor-empty"><p>프로젝트를 선택하거나 추가하세요.</p></div>`;
 }
 
 // ───────────────────────────────────────────────
@@ -737,7 +462,7 @@ function deleteProject(id) {
 const trailCanvas = document.getElementById('mouseTrailCanvas');
 const ctx = trailCanvas.getContext('2d');
 let points = [];
-const TRAIL_LIFETIME = 200; // 라인이 유지되는 시간 (0.2초 = 200ms)
+const TRAIL_LIFETIME = 200;
 
 function resizeTrailCanvas() {
   trailCanvas.width = window.innerWidth;
@@ -748,47 +473,37 @@ window.addEventListener('resize', resizeTrailCanvas);
 resizeTrailCanvas();
 
 window.addEventListener('mousemove', (e) => {
-  if (window.innerWidth <= 768) return; // 모바일(768px 이하) 제외
+  if (window.innerWidth <= 768) return;
   points.push({ x: e.clientX, y: e.clientY, time: Date.now() });
 });
 
 function animateTrail() {
   requestAnimationFrame(animateTrail);
-  
-  // 캔버스 초기화
   ctx.clearRect(0, 0, trailCanvas.width, trailCanvas.height);
   if (window.innerWidth <= 768) return;
 
   const currentTime = Date.now();
-  
-  // 지정된 시간이 지난 과거의 마우스 좌표들은 배열에서 즉시 제거
   points = points.filter(p => currentTime - p.time < TRAIL_LIFETIME);
-
   if (points.length < 2) return;
 
-  // 점들을 부드러운 곡선(Quadratic Curve)으로 연결하여 그리기
   ctx.beginPath();
   ctx.moveTo(points[0].x, points[0].y);
-  
+
   for (let i = 1; i < points.length - 1; i++) {
     const xc = (points[i].x + points[i + 1].x) / 2;
     const yc = (points[i].y + points[i + 1].y) / 2;
     ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
   }
-  
-  // 마지막 점 연결
+
   ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-  
-  // 설정하신 색상(#1E50D9)
-  ctx.strokeStyle = '#1E50D9';
-  ctx.lineWidth = 5; 
+  ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+  ctx.lineWidth = 1.5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.stroke();
 }
 
 animateTrail();
-
 </script>
 </body>
 </html>
