@@ -8,6 +8,16 @@
     <link rel="cms-config-url" type="text/yaml" href="config.yml" />
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js">
+        if (window.netlifyIdentity) {
+    window.netlifyIdentity.init({
+      APIUrl: "https://stwork.netlify.app/.netlify/identity"
+    });
+    window.netlifyIdentity.on("login", () => {
+      document.location.href = "/work/admin/";
+    });
+  }
+    </script>
+    
   </body>
 </html>
