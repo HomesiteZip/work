@@ -13,7 +13,8 @@ collections:
     folder: "_portfolio"
     create: true
     slug: "{{slug}}"
-    sortable_fields: ["order", "title", "date"]
+    sortable_fields: ["title", "date"]
+    summary: "{{title}} | {{category}} | {{date}}"
     view_groups:
       - label: "카테고리별"
         field: category
@@ -21,9 +22,10 @@ collections:
       - { label: "제목", name: "title", widget: "string" }
       - { label: "본문 글", name: "body", widget: "text" }
 
-      - label: "카테고리"
+      - label: "카테고리 (복수 선택 가능)"
         name: "category"
         widget: "select"
+        multiple: true
         options:
           - { label: "GRAPHIC", value: "GRAPHIC" }
           - { label: "GOODS", value: "GOODS" }
