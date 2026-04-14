@@ -353,7 +353,7 @@ nav::after {
   max-width: 1440px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 3fr 5fr;
   align-items: start;
   min-height: calc(100vh - var(--header-h));
 }
@@ -369,7 +369,6 @@ nav::after {
   display: flex;
   flex-direction: column;
   gap: 18px;
-  border-right: 1px solid var(--border);
 }
 .detail-left::-webkit-scrollbar { display: none; }
 
