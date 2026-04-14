@@ -524,9 +524,12 @@ async function loadPortfolioFromGitHub() {
       if (orderRes.ok) {
         const slugOrder = await orderRes.json();
         const map = Object.fromEntries(projects.map(p => [p.slug, p]));
+        const unlisted = projects
+          .filter(p => !slugOrder.includes(p.slug))
+          .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
         orderedProjects = [
-          ...slugOrder.map(s => map[s]).filter(Boolean),
-          ...projects.filter(p => !slugOrder.includes(p.slug))
+          ...unlisted,
+          ...slugOrder.map(s => map[s]).filter(Boolean)
         ];
       }
     } catch(_) {}
