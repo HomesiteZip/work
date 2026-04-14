@@ -32,9 +32,9 @@
 <div id="view-index" class="view-container active">
   <header id="siteHeader">
     <nav>
-      <a href="#" onclick="switchView('index'); return false;" class="logo">STUDIO ZIP</a>
+      <a href="#" data-switch-view="index" class="logo">STUDIO ZIP</a>
       <div class="nav-links">
-        <a href="#" onclick="switchView('contact'); return false;">CONTACT</a>
+        <a href="#" data-switch-view="contact">CONTACT</a>
       </div>
     </nav>
   </header>
@@ -44,22 +44,22 @@
 
       <!-- ── DESKTOP: 카테고리 버튼 목록 ── -->
       <div class="filter-group category-group desktop-only">
-        <label class="cat-label-all" onclick="setCategory('', null)">CATEGORY</label>
+        <label class="cat-label-all" data-set-category="">CATEGORY</label>
         <div class="category-list">
-          <button class="cat-filter-btn" data-cat="GOODS" onclick="setCategory('GOODS', this)">GOODS</button>
-          <button class="cat-filter-btn" data-cat="EDITORIAL" onclick="setCategory('EDITORIAL', this)">EDITORIAL</button>
-          <button class="cat-filter-btn" data-cat="POSTER" onclick="setCategory('POSTER', this)">POSTER</button>
-          <button class="cat-filter-btn" data-cat="WEB" onclick="setCategory('WEB', this)">WEB</button>
-          <button class="cat-filter-btn" data-cat="SPACE" onclick="setCategory('SPACE', this)">SPACE</button>
-          <button class="cat-filter-btn" data-cat="ILLUSTRATION" onclick="setCategory('ILLUSTRATION', this)">ILLUSTRATION</button>
-          <button class="cat-filter-btn" data-cat="ORIGINAL" onclick="setCategory('ORIGINAL', this)">ORIGINAL</button>
+          <button class="cat-filter-btn" data-cat="GOODS" data-set-category="GOODS">GOODS</button>
+          <button class="cat-filter-btn" data-cat="EDITORIAL" data-set-category="EDITORIAL">EDITORIAL</button>
+          <button class="cat-filter-btn" data-cat="POSTER" data-set-category="POSTER">POSTER</button>
+          <button class="cat-filter-btn" data-cat="WEB" data-set-category="WEB">WEB</button>
+          <button class="cat-filter-btn" data-cat="SPACE" data-set-category="SPACE">SPACE</button>
+          <button class="cat-filter-btn" data-cat="ILLUSTRATION" data-set-category="ILLUSTRATION">ILLUSTRATION</button>
+          <button class="cat-filter-btn" data-cat="ORIGINAL" data-set-category="ORIGINAL">ORIGINAL</button>
         </div>
       </div>
 
       <!-- ── DESKTOP: YEAR 셀렉트 + 리셋 ── -->
       <div class="filter-right desktop-only">
         <div class="filter-group">
-          <select id="filterYear" onchange="applyFilters()">
+          <select id="filterYear" data-action="applyFilters">
             <option value="">YEAR</option>
             <option value="before2017">Before 2017</option>
             <option value="2018">2018</option>
@@ -73,7 +73,7 @@
             <option value="2026">2026</option>
           </select>
         </div>
-        <button class="filter-reset" onclick="resetFilters()">
+        <button class="filter-reset" data-action="resetFilters">
           RESET
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -87,49 +87,49 @@
 
         <!-- CATEGORY 커스텀 드롭다운 -->
         <div class="custom-select" id="mobileCatDropdown">
-          <button class="custom-select-btn" type="button" onclick="toggleCustomSelect('mobileCatDropdown')">
+          <button class="custom-select-btn" type="button" data-toggle-select="mobileCatDropdown">
             <span class="custom-select-value" id="mobileCatValue">CATEGORY</span>
             <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M1 1l4.5 4.5L10 1"/>
             </svg>
           </button>
           <ul class="custom-select-list" id="mobileCatList">
-            <li data-value="" class="active" onclick="mobileCatSelect('', 'CATEGORY')">CATEGORY</li>
-            <li data-value="GOODS" onclick="mobileCatSelect('GOODS', 'GOODS')">GOODS</li>
-            <li data-value="EDITORIAL" onclick="mobileCatSelect('EDITORIAL', 'EDITORIAL')">EDITORIAL</li>
-            <li data-value="POSTER" onclick="mobileCatSelect('POSTER', 'POSTER')">POSTER</li>
-            <li data-value="WEB" onclick="mobileCatSelect('WEB', 'WEB')">WEB</li>
-            <li data-value="SPACE" onclick="mobileCatSelect('SPACE', 'SPACE')">SPACE</li>
-            <li data-value="ILLUSTRATION" onclick="mobileCatSelect('ILLUSTRATION', 'ILLUSTRATION')">ILLUSTRATION</li>
-            <li data-value="ORIGINAL" onclick="mobileCatSelect('ORIGINAL', 'ORIGINAL')">ORIGINAL</li>
+            <li data-value="" class="active" data-mobile-cat="" data-mobile-cat-label="CATEGORY">CATEGORY</li>
+            <li data-value="GOODS" data-mobile-cat="GOODS" data-mobile-cat-label="GOODS">GOODS</li>
+            <li data-value="EDITORIAL" data-mobile-cat="EDITORIAL" data-mobile-cat-label="EDITORIAL">EDITORIAL</li>
+            <li data-value="POSTER" data-mobile-cat="POSTER" data-mobile-cat-label="POSTER">POSTER</li>
+            <li data-value="WEB" data-mobile-cat="WEB" data-mobile-cat-label="WEB">WEB</li>
+            <li data-value="SPACE" data-mobile-cat="SPACE" data-mobile-cat-label="SPACE">SPACE</li>
+            <li data-value="ILLUSTRATION" data-mobile-cat="ILLUSTRATION" data-mobile-cat-label="ILLUSTRATION">ILLUSTRATION</li>
+            <li data-value="ORIGINAL" data-mobile-cat="ORIGINAL" data-mobile-cat-label="ORIGINAL">ORIGINAL</li>
           </ul>
         </div>
 
         <!-- YEAR 커스텀 드롭다운 -->
         <div class="custom-select" id="mobileYearDropdown">
-          <button class="custom-select-btn" type="button" onclick="toggleCustomSelect('mobileYearDropdown')">
+          <button class="custom-select-btn" type="button" data-toggle-select="mobileYearDropdown">
             <span class="custom-select-value" id="mobileYearValue">YEAR</span>
             <svg class="custom-select-arrow" width="11" height="7" viewBox="0 0 11 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <path d="M1 1l4.5 4.5L10 1"/>
             </svg>
           </button>
           <ul class="custom-select-list" id="mobileYearList">
-            <li data-value="" class="active" onclick="mobileYearSelect('', 'YEAR')">YEAR</li>
-            <li data-value="before2017" onclick="mobileYearSelect('before2017', 'Before 2017')">Before 2017</li>
-            <li data-value="2018" onclick="mobileYearSelect('2018', '2018')">2018</li>
-            <li data-value="2019" onclick="mobileYearSelect('2019', '2019')">2019</li>
-            <li data-value="2020" onclick="mobileYearSelect('2020', '2020')">2020</li>
-            <li data-value="2021" onclick="mobileYearSelect('2021', '2021')">2021</li>
-            <li data-value="2022" onclick="mobileYearSelect('2022', '2022')">2022</li>
-            <li data-value="2023" onclick="mobileYearSelect('2023', '2023')">2023</li>
-            <li data-value="2024" onclick="mobileYearSelect('2024', '2024')">2024</li>
-            <li data-value="2025" onclick="mobileYearSelect('2025', '2025')">2025</li>
-            <li data-value="2026" onclick="mobileYearSelect('2026', '2026')">2026</li>
+            <li data-value="" class="active" data-mobile-year="" data-mobile-year-label="YEAR">YEAR</li>
+            <li data-value="before2017" data-mobile-year="before2017" data-mobile-year-label="Before 2017">Before 2017</li>
+            <li data-value="2018" data-mobile-year="2018" data-mobile-year-label="2018">2018</li>
+            <li data-value="2019" data-mobile-year="2019" data-mobile-year-label="2019">2019</li>
+            <li data-value="2020" data-mobile-year="2020" data-mobile-year-label="2020">2020</li>
+            <li data-value="2021" data-mobile-year="2021" data-mobile-year-label="2021">2021</li>
+            <li data-value="2022" data-mobile-year="2022" data-mobile-year-label="2022">2022</li>
+            <li data-value="2023" data-mobile-year="2023" data-mobile-year-label="2023">2023</li>
+            <li data-value="2024" data-mobile-year="2024" data-mobile-year-label="2024">2024</li>
+            <li data-value="2025" data-mobile-year="2025" data-mobile-year-label="2025">2025</li>
+            <li data-value="2026" data-mobile-year="2026" data-mobile-year-label="2026">2026</li>
           </ul>
         </div>
 
         <!-- 리셋 버튼 -->
-        <button class="mobile-reset-btn" onclick="resetFilters()" aria-label="필터 초기화">
+        <button class="mobile-reset-btn" data-action="resetFilters" aria-label="필터 초기화">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
             <path d="M3 3v5h5"/>
@@ -153,9 +153,9 @@
 <div id="view-detail" class="view-container">
   <header id="siteHeaderDetail">
     <nav>
-      <a href="#" onclick="switchView('index'); return false;" class="logo">STUDIO ZIP</a>
+      <a href="#" data-switch-view="index" class="logo">STUDIO ZIP</a>
       <div class="nav-links">
-        <a href="#" onclick="switchView('contact'); return false;">CONTACT</a>
+        <a href="#" data-switch-view="contact">CONTACT</a>
       </div>
     </nav>
   </header>
@@ -169,9 +169,9 @@
 <div id="view-contact" class="view-container">
   <header id="siteHeaderContact">
     <nav>
-      <a href="#" onclick="switchView('index'); return false;" class="logo">STUDIO ZIP</a>
+      <a href="#" data-switch-view="index" class="logo">STUDIO ZIP</a>
       <div class="nav-links">
-        <a href="#" onclick="switchView('contact'); return false;" class="active">CONTACT</a>
+        <a href="#" data-switch-view="contact" class="active">CONTACT</a>
       </div>
     </nav>
   </header>
@@ -186,7 +186,7 @@
           작업 의뢰나 협업 제안은 아래 폼을 통해 편하게 연락 주세요.
         </p>
         <div class="about-links">
-          <a href="/cdn-cgi/l/email-protection#592a2d2c3d30367723302977343d193e34383035773a3634"><span class="__cf_email__" data-cfemail="27545352434e48095d4e57094a4367404a464e4b0944484a">[email&#160;protected]</span></a>
+          <a href="mailto:studio.zip.md@gmail.com">studio.zip.md@gmail.com</a>
           <div class="about-social">
             <a href="https://instagram.com/" target="_blank" class="social-icon-link" aria-label="Instagram">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -208,65 +208,65 @@
           <div class="form-row two-col">
             <div class="form-group">
               <label for="name">담당자 이름 <span class="required">*</span></label>
-              <input type="text" id="name" placeholder="홍길동" oninput="checkForm()">
+              <input type="text" id="name" placeholder="홍길동" data-action="checkForm">
             </div>
             <div class="form-group">
               <label for="phone">연락처 <span class="required">*</span></label>
-              <input type="tel" id="phone" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" oninput="formatPhone(this)">
+              <input type="tel" id="phone" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" data-action="formatPhone">
             </div>
           </div>
 
           <div class="form-group">
             <label for="email">이메일 <span class="required">*</span></label>
-            <input type="email" id="email" placeholder="hello@email.com" oninput="checkForm()" onblur="validateEmail()">
+            <input type="email" id="email" placeholder="hello@email.com" data-action="checkForm" data-onblur="validateEmail">
             <span class="field-error" id="emailError">올바른 이메일 주소를 입력해 주세요.</span>
           </div>
 
           <div class="form-group">
             <label>의뢰 분야 <span class="required">*</span> <span class="label-sub">(복수 선택 가능)</span></label>
             <div class="checkbox-grid" id="catGrid">
-              <label class="check-item"><input type="checkbox" value="GRAPHIC" onchange="checkForm()"><span>GRAPHIC</span></label>
-              <label class="check-item"><input type="checkbox" value="GOODS" onchange="checkForm()"><span>GOODS</span></label>
-              <label class="check-item"><input type="checkbox" value="EDITORIAL" onchange="checkForm()"><span>EDITORIAL</span></label>
-              <label class="check-item"><input type="checkbox" value="ILLUSTRATION" onchange="checkForm()"><span>ILLUSTRATION</span></label>
+              <label class="check-item"><input type="checkbox" value="GRAPHIC" data-onchange="checkForm"><span>GRAPHIC</span></label>
+              <label class="check-item"><input type="checkbox" value="GOODS" data-onchange="checkForm"><span>GOODS</span></label>
+              <label class="check-item"><input type="checkbox" value="EDITORIAL" data-onchange="checkForm"><span>EDITORIAL</span></label>
+              <label class="check-item"><input type="checkbox" value="ILLUSTRATION" data-onchange="checkForm"><span>ILLUSTRATION</span></label>
             </div>
           </div>
 
           <div class="form-group">
             <label>상세 분야 <span class="required">*</span></label>
             <div class="checkbox-grid" style="grid-template-columns: 1fr 1fr;">
-              <label class="check-item"><input type="radio" name="detail_category" value="디자인 의뢰만" onchange="checkForm()"><span>디자인 의뢰만</span></label>
-              <label class="check-item"><input type="radio" name="detail_category" value="제품 제작 및 납품 포함" onchange="checkForm()"><span>제품 제작 및 납품 포함</span></label>
+              <label class="check-item"><input type="radio" name="detail_category" value="디자인 의뢰만" data-onchange="checkForm"><span>디자인 의뢰만</span></label>
+              <label class="check-item"><input type="radio" name="detail_category" value="제품 제작 및 납품 포함" data-onchange="checkForm"><span>제품 제작 및 납품 포함</span></label>
             </div>
           </div>
 
           <div class="form-group">
             <label>프로젝트 예산범위 <span class="required">*</span></label>
             <div class="checkbox-grid">
-              <label class="check-item"><input type="radio" name="budget" value="300만원 이하" onchange="checkForm()"><span>300만원 이하</span></label>
-              <label class="check-item"><input type="radio" name="budget" value="300만원 이상" onchange="checkForm()"><span>300만원 이상</span></label>
-              <label class="check-item"><input type="radio" name="budget" value="500만원 이상" onchange="checkForm()"><span>500만원 이상</span></label>
-              <label class="check-item"><input type="radio" name="budget" value="1000만원 이상" onchange="checkForm()"><span>1000만원 이상</span></label>
-              <label class="check-item"><input type="radio" name="budget" value="기타" onchange="checkForm()"><span>기타</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="300만원 이하" data-onchange="checkForm"><span>300만원 이하</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="300만원 이상" data-onchange="checkForm"><span>300만원 이상</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="500만원 이상" data-onchange="checkForm"><span>500만원 이상</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="1000만원 이상" data-onchange="checkForm"><span>1000만원 이상</span></label>
+              <label class="check-item"><input type="radio" name="budget" value="기타" data-onchange="checkForm"><span>기타</span></label>
             </div>
           </div>
 
           <div class="form-group">
             <label for="schedule">프로젝트 일정 <span class="required">*</span></label>
-            <input type="text" id="schedule" placeholder="예: 2026년 5월 완료 목표" oninput="checkForm()">
+            <input type="text" id="schedule" placeholder="예: 2026년 5월 완료 목표" data-action="checkForm">
           </div>
 
           <div class="form-group">
             <label for="message">프로젝트 내용 <span class="required">*</span></label>
-            <textarea id="message" rows="6" placeholder="프로젝트 개요, 방향성 등을 자유롭게 작성해 주세요." oninput="checkForm()"></textarea>
+            <textarea id="message" rows="6" placeholder="프로젝트 개요, 방향성 등을 자유롭게 작성해 주세요." data-action="checkForm"></textarea>
           </div>
 
           <div class="form-group">
             <label for="attachment">참고자료 첨부</label>
-            <input type="file" id="attachment" onchange="checkForm()">
+            <input type="file" id="attachment" data-onchange="checkForm">
           </div>
 
-          <button class="submit-btn" id="submitBtn" disabled onclick="sendEmail()">
+          <button class="submit-btn" id="submitBtn" disabled data-action="sendEmail">
             <span id="btnText">문의 보내기</span>
           </button>
         </div>
@@ -275,7 +275,7 @@
           <div class="success-icon">✓</div>
           <h3>문의가 접수되었습니다</h3>
           <p>빠른 시일 내에 연락드리겠습니다. 감사합니다.</p>
-          <button onclick="resetForm()">새 문의하기</button>
+          <button data-action="resetForm">새 문의하기</button>
         </div>
       </section>
     </div>
@@ -286,6 +286,54 @@
 <canvas id="mouseTrailCanvas" class="mouse-trail"></canvas>
 
 <script>
+
+// ───────────────────────────────────────────────
+// Event Delegation (onclick 대체)
+// ───────────────────────────────────────────────
+document.addEventListener('click', function(e) {
+  const t = e.target.closest('[data-switch-view]');
+  if (t) { e.preventDefault(); switchView(t.dataset.switchView); return; }
+
+  const t2 = e.target.closest('[data-set-category]');
+  if (t2) { setCategory(t2.dataset.setCategory, t2.tagName === 'BUTTON' ? t2 : null); return; }
+
+  const t3 = e.target.closest('[data-action="resetFilters"]');
+  if (t3) { resetFilters(); return; }
+
+  const t4 = e.target.closest('[data-toggle-select]');
+  if (t4) { toggleCustomSelect(t4.dataset.toggleSelect); return; }
+
+  const t5 = e.target.closest('[data-mobile-cat]');
+  if (t5) { mobileCatSelect(t5.dataset.mobileCat, t5.dataset.mobileCatLabel); return; }
+
+  const t6 = e.target.closest('[data-mobile-year]');
+  if (t6) { mobileYearSelect(t6.dataset.mobileYear, t6.dataset.mobileYearLabel); return; }
+
+  const t7 = e.target.closest('[data-open-detail]');
+  if (t7) { openDetail(Number(t7.dataset.openDetail)); return; }
+
+  const t8 = e.target.closest('[data-action="sendEmail"]');
+  if (t8) { sendEmail(); return; }
+
+  const t9 = e.target.closest('[data-action="resetForm"]');
+  if (t9) { resetForm(); return; }
+});
+
+document.addEventListener('input', function(e) {
+  if (e.target.dataset.action === 'checkForm') checkForm();
+  if (e.target.dataset.action === 'formatPhone') formatPhone(e.target);
+});
+
+document.addEventListener('change', function(e) {
+  if (e.target.dataset.action === 'applyFilters') applyFilters();
+  if (e.target.dataset.onchange === 'checkForm') checkForm();
+});
+
+document.addEventListener('blur', function(e) {
+  if (e.target.dataset.onblur === 'validateEmail') validateEmail();
+}, true);
+
+
   // Netlify Identity - admin 리디렉션
   if (window.netlifyIdentity) {
     window.netlifyIdentity.on("init", user => {
@@ -502,7 +550,7 @@ function renderGallery(projects) {
     const cats = Array.isArray(p.category) ? p.category : [p.category];
     const catTags = cats.map(c => `<span class="cat-badge" data-category="${c}">${c}</span>`).join('');
     return `
-    <div class="gallery-item" onclick="openDetail(${p.id})">
+    <div class="gallery-item" data-open-detail="${p.id}">
       <div class="gallery-thumb">
         <img src="${p.thumbnail}" alt="${p.title}" loading="lazy">
       </div>
@@ -769,4 +817,10 @@ function animateTrail() {
   points = points.filter(p => currentTime - p.time < TRAIL_LIFETIME);
   if (points.length < 2) return;
 
-  ctx.beginPa
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+
+  for (let i = 1; i < points.length - 1; i++) {
+    const xc = (points[i].x + points[i + 1].x) / 2;
+    const yc = (points[i].y + points[i + 1].y) / 2;
+    ctx.quadraticCurveTo(points[i].x, points[i].y, x
