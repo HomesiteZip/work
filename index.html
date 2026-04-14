@@ -44,7 +44,7 @@
 
       <!-- ── DESKTOP: 카테고리 버튼 목록 ── -->
       <div class="filter-group category-group desktop-only">
-        <label style="font-weight: 700; color: var(--text); cursor: pointer;" onclick="setCategory('', null)">CATEGORY</label>
+        <label class="cat-label-all" onclick="setCategory('', null)">CATEGORY</label>
         <div class="category-list">
           <button class="cat-filter-btn" data-cat="GOODS" onclick="setCategory('GOODS', this)">GOODS</button>
           <button class="cat-filter-btn" data-cat="EDITORIAL" onclick="setCategory('EDITORIAL', this)">EDITORIAL</button>
@@ -139,13 +139,6 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- ── ORIGINAL 배너 ── -->
-  <div class="original-banner" id="originalBanner">
-    <a href="#" id="originalBannerLink">
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1440&q=80" alt="ORIGINAL">
-    </a>
   </div>
 
   <main id="galleryMain">
@@ -526,6 +519,8 @@ function setCategory(cat, btnElement) {
   currentSelectedCategory = cat;
   document.querySelectorAll('.cat-filter-btn').forEach(btn => btn.classList.remove('active'));
   if (btnElement) btnElement.classList.add('active');
+  const catLabelAll = document.querySelector('.cat-label-all');
+  if (catLabelAll) catLabelAll.classList.toggle('dimmed', cat !== '');
   const banner = document.getElementById('originalBanner');
   if (banner) banner.classList.toggle('visible', cat === 'ORIGINAL');
   applyFilters();
