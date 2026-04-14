@@ -141,6 +141,13 @@
     </div>
   </div>
 
+  <!-- ── ORIGINAL 배너 ── -->
+  <div class="original-banner" id="originalBanner">
+    <a href="#" id="originalBannerLink">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1440&q=80" alt="ORIGINAL">
+    </a>
+  </div>
+
   <main id="galleryMain">
     <div class="gallery-grid" id="galleryGrid"></div>
     <div class="no-results" id="noResults" style="display:none;">
@@ -519,6 +526,8 @@ function setCategory(cat, btnElement) {
   currentSelectedCategory = cat;
   document.querySelectorAll('.cat-filter-btn').forEach(btn => btn.classList.remove('active'));
   if (btnElement) btnElement.classList.add('active');
+  const banner = document.getElementById('originalBanner');
+  if (banner) banner.classList.toggle('visible', cat === 'ORIGINAL');
   applyFilters();
 }
 
@@ -533,7 +542,6 @@ function applyFilters() {
 
 function resetFilters() {
   document.getElementById('filterYear').value = '';
-  // 모바일 커스텀 드롭다운 초기화
   const catVal = document.getElementById('mobileCatValue');
   const yearVal = document.getElementById('mobileYearValue');
   if (catVal) catVal.textContent = 'CATEGORY';
@@ -541,6 +549,8 @@ function resetFilters() {
   document.querySelectorAll('.custom-select-list li').forEach(li => {
     li.classList.toggle('active', li.dataset.value === '');
   });
+  const banner = document.getElementById('originalBanner');
+  if (banner) banner.classList.remove('visible');
   setCategory('');
 }
 
@@ -569,6 +579,8 @@ function mobileCatSelect(val, label) {
     li.classList.toggle('active', li.dataset.value === val);
   });
   document.getElementById('mobileCatDropdown').classList.remove('open');
+  const banner = document.getElementById('originalBanner');
+  if (banner) banner.classList.toggle('visible', val === 'ORIGINAL');
   applyFilters();
 }
 
@@ -773,8 +785,8 @@ function animateTrail() {
 
  
   ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-  ctx.strokeStyle = 'rgba(17,17,17,0.18)';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = 'rgba(55,95,255,0.7)';
+  ctx.lineWidth = 5;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   ctx.stroke();
