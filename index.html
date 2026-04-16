@@ -571,7 +571,13 @@ function setCategory(cat, btnElement) {
   document.querySelectorAll('.cat-filter-btn').forEach(btn => btn.classList.remove('active'));
   if (btnElement) btnElement.classList.add('active');
   const catLabelAll = document.querySelector('.cat-label-all');
-  if (catLabelAll) catLabelAll.classList.remove('dimmed');
+  if (catLabelAll) {
+    if (cat) {
+      catLabelAll.classList.add('dimmed');
+    } else {
+      catLabelAll.classList.remove('dimmed');
+    }
+  }
   const banner = document.getElementById('originalBanner');
   if (banner) banner.classList.toggle('visible', cat === 'ORIGINAL');
   applyFilters();
