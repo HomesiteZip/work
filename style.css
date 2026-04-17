@@ -19,11 +19,46 @@
   --text3:   #999999;
   --border:  rgba(0,0,0,0.09);
   --border2: rgba(0,0,0,0.16);
+  --ticker-h: 32px;
   --header-h: 40px;
   --filter-h: 44px;
   --font-sans: 'SUIT', sans-serif;
   --font-serif: 'SUIT', sans-serif;
   --radius: 6px;
+}
+
+/* ─── Ticker Banner ─── */
+.ticker-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--ticker-h);
+  background: #111111;
+  overflow: hidden;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+}
+
+.ticker-track {
+  display: flex;
+  white-space: nowrap;
+  animation: ticker-scroll 30s linear infinite;
+}
+
+.ticker-item {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  padding-right: 80px;
+  flex-shrink: 0;
+}
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
 }
 
 html { font-size: 16px; scroll-behavior: smooth; scrollbar-gutter: stable; }
@@ -43,7 +78,7 @@ button { cursor: pointer; font-family: var(--font-sans); }
 /* ─── Header (sticky) ─── */
 header {
   position: sticky;
-  top: 0;
+  top: var(--ticker-h);
   height: var(--header-h);
   background: rgba(240, 238, 235, 0.5);
   backdrop-filter: blur(16px);
@@ -98,7 +133,7 @@ nav::after {
 /* ─── Filter Bar (fixed) ─── */
 .filter-bar {
   position: fixed;
-  top: var(--header-h);
+  top: calc(var(--ticker-h) + var(--header-h));
   left: 0; right: 0;
   height: var(--filter-h);
   background: rgba(240, 238, 235, 0.8);
@@ -361,8 +396,8 @@ nav::after {
 /* ─── Detail Left (sticky) ─── */
 .detail-left {
   position: sticky;
-  top: var(--header-h);
-  height: calc(100vh - var(--header-h));
+  top: calc(var(--ticker-h) + var(--header-h));
+  height: calc(100vh - var(--ticker-h) - var(--header-h));
   overflow-y: auto;
   scrollbar-width: none;
   padding: 28px 20px 40px 28px;
@@ -925,6 +960,7 @@ textarea { resize: vertical; }
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   :root {
+    --ticker-h: 28px;
     --header-h: 34px;
     --filter-h: 42px;
   }
