@@ -214,7 +214,7 @@
               </svg>
             </a>
             <a href="https://blog.naver.com/PostList.naver?blogId=joohongbi&from=postList&categoryNo=11&parentCategoryNo=11" target="_blank" class="social-icon-link" aria-label="Naver Blog">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/>
               </svg>
             </a>
@@ -257,12 +257,12 @@
             <label>상세 분야 <span class="required">*</span></label>
             <div class="checkbox-grid" style="grid-template-columns: 1fr 1fr;">
               <label class="check-item"><input type="radio" name="detail_category" value="디자인 의뢰만" data-onchange="checkForm"><span>디자인 의뢰만</span></label>
-              <label class="check-item"><input type="radio" name="detail_category" value="제품 제작 및 납품 포함" data-onchange="checkForm"><span>제품 제작 및 납품 포함</span></label>
+              <label class="check-item"><input type="radio" name="detail_category" value="디자인+제작+납품" data-onchange="checkForm"><span>디자인+제작+납품</span></label>
             </div>
           </div>
 
           <div class="form-group">
-            <label>프로젝트 예산범위 <span class="required">*</span></label>
+            <label>프로젝트 예산 <span class="required">*</span></label>
             <div class="checkbox-grid">
               <label class="check-item"><input type="radio" name="budget" value="300만원 이하" data-onchange="checkForm"><span>300만원 이하</span></label>
               <label class="check-item"><input type="radio" name="budget" value="300만원 이상" data-onchange="checkForm"><span>300만원 이상</span></label>
@@ -274,12 +274,12 @@
 
           <div class="form-group">
             <label for="schedule">프로젝트 일정 <span class="required">*</span></label>
-            <input type="text" id="schedule" name="schedule" placeholder="예: 2026년 5월 완료 목표" data-action="checkForm">
+            <input type="text" id="schedule" name="schedule" placeholder="예: 2026년 12월 납품 필요" data-action="checkForm">
           </div>
 
           <div class="form-group">
             <label for="message">프로젝트 내용 <span class="required">*</span></label>
-            <textarea id="message" name="message" rows="6" placeholder="프로젝트 개요, 방향성 등을 자유롭게 작성해 주세요." data-action="checkForm"></textarea>
+            <textarea id="message" name="message" rows="6" placeholder="원하시는 품목이나 기획이 있으시다면 자유롭게 작성해주세요." data-action="checkForm"></textarea>
           </div>
 
           <div class="form-group">
@@ -288,7 +288,7 @@
           </div>
 
           <button class="submit-btn" id="submitBtn" disabled data-action="sendEmail">
-            <span id="btnText">문의 보내기</span>
+            <span id="btnText">작성 완료</span>
           </button>
         </form>
 
