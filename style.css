@@ -131,7 +131,7 @@ nav::after {
 .nav-links a.active { color: var(--text); }
 
 .nav-links a[data-switch-view="contact"] {
-  letter-spacing: 0.07em;
+  letter-spacing: 0.02em;
 }
 
 /* ─── About Logo Placeholder ─── */
@@ -141,7 +141,7 @@ nav::after {
   background: var(--bg2);
   border: 1px solid var(--border2);
   flex-shrink: 0;
-  margin-bottom: 20px;
+  margin-bottom: 30px 0px 20px 0px;
 }
 
 /* ─── Filter Bar (fixed) ─── */
@@ -516,7 +516,7 @@ nav::after {
 
 .about-desc {
   font-size: 18px;
-  line-height: 2;
+  line-height: 1.5;
   color: var(--text2);
   margin-bottom: 50px;
 }
