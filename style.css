@@ -326,7 +326,7 @@ nav::after {
   transition: opacity 0.3s;
 }
 
-.original-banner a:hover img { opacity: 0.85; }
+.original-banner a:hover img { opacity: 1; }
 
 .banner-pc { display: block; }
 .banner-mobile { display: none; }
