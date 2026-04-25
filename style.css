@@ -303,6 +303,9 @@ nav::after {
   display: none;
   width: 100%;
   overflow: hidden;
+  margin-top: calc(var(--ticker-h) + var(--header-h) + var(--filter-h));
+  padding: 20px 10px;
+  box-sizing: border-box;
 }
 
 .original-banner.visible {
@@ -317,6 +320,7 @@ nav::after {
 
 .original-banner img {
   width: 100%;
+  height: 100px;
   display: block;
   object-fit: cover;
   transition: opacity 0.3s;
@@ -324,8 +328,7 @@ nav::after {
 
 .original-banner a:hover img { opacity: 0.85; }
 
-/* PC: 16:9 */
-.banner-pc { aspect-ratio: 16/9; }
+.banner-pc { display: block; }
 .banner-mobile { display: none; }
 
 /* ─── Gallery Main ─── */
@@ -336,6 +339,11 @@ nav::after {
   margin: 0 auto;
   padding-left: 28px;
   padding-right: 28px;
+}
+
+/* 배너 visible 시 갤러리 top padding 제거 */
+body:has(.original-banner.visible) #galleryMain {
+  padding-top: 28px;
 }
 
 .gallery-grid {
@@ -991,9 +999,12 @@ textarea { resize: vertical; }
 
   .gallery-grid { grid-template-columns: repeat(2, 1fr); column-gap: 4px; row-gap: 20px; }
 
-  .original-banner { padding: 0; }
-  .banner-pc { display: none; }
-  .banner-mobile { display: block; aspect-ratio: 4/3; }
+  .original-banner {
+    margin-top: calc(var(--ticker-h) + var(--header-h) + var(--filter-h));
+    padding: 20px 10px;
+  }
+  .original-banner img { height: auto; aspect-ratio: 4/3; }
+  body:has(.original-banner.visible) #galleryMain { padding-top: 16px; }
 
   .detail-content {
     grid-template-columns: 1fr;
