@@ -224,9 +224,8 @@
 
       <section class="form-section">
         <h2>작업 의뢰</h2>
-        <form id="formWrap" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="contact">
-          <p style="display:none"><input name="bot-field"></p>
+        <form id="formWrap" name="contact">
+
           <div class="form-row two-col">
             <div class="form-group">
               <label for="name">담당자 이름 <span class="required">*</span></label>
@@ -806,7 +805,11 @@ function sendEmail() {
     const attachFile = document.getElementById('attachment').files[0];
     if (attachFile) formData.append('attachment', attachFile);
 
-    fetch('/', { method: 'POST', body: formData })
+    fetch('https://formspree.io/f/mzdywblw', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: formData
+  })
       .then(() => {
         document.getElementById('formWrap').style.display = 'none';
         document.getElementById('successMsg').style.display = 'block';
