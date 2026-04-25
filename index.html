@@ -196,6 +196,7 @@
   <main class="contact-main">
     <div class="contact-wrapper">
       <section class="about-section">
+        <div class="about-logo-placeholder"></div>
         <p class="about-desc">
           눈에 담고 손에 닿는 이야기를 만들다.<br>그래픽 디자인 스튜디오 집
         </p>
@@ -213,7 +214,7 @@
               </svg>
             </a>
             <a href="https://blog.naver.com/PostList.naver?blogId=joohongbi&from=postList&categoryNo=11&parentCategoryNo=11" target="_blank" class="social-icon-link" aria-label="Naver Blog">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/>
               </svg>
             </a>
@@ -223,31 +224,33 @@
 
       <section class="form-section">
         <h2>작업 의뢰</h2>
-        <div id="formWrap">
+        <form id="formWrap" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p style="display:none"><input name="bot-field"></p>
           <div class="form-row two-col">
             <div class="form-group">
               <label for="name">담당자 이름 <span class="required">*</span></label>
-              <input type="text" id="name" placeholder="홍길동" data-action="checkForm">
+              <input type="text" id="name" name="name" placeholder="홍길동" data-action="checkForm">
             </div>
             <div class="form-group">
               <label for="phone">연락처 <span class="required">*</span></label>
-              <input type="tel" id="phone" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" data-action="formatPhone">
+              <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" maxlength="13" inputmode="numeric" data-action="formatPhone">
             </div>
           </div>
 
           <div class="form-group">
             <label for="email">이메일 <span class="required">*</span></label>
-            <input type="email" id="email" placeholder="hello@email.com" data-action="checkForm" data-onblur="validateEmail">
+            <input type="email" id="email" name="email" placeholder="hello@email.com" data-action="checkForm" data-onblur="validateEmail">
             <span class="field-error" id="emailError">올바른 이메일 주소를 입력해 주세요.</span>
           </div>
 
           <div class="form-group">
             <label>의뢰 분야 <span class="required">*</span> <span class="label-sub">(복수 선택 가능)</span></label>
             <div class="checkbox-grid" id="catGrid">
-              <label class="check-item"><input type="checkbox" value="GRAPHIC" data-onchange="checkForm"><span>GRAPHIC</span></label>
-              <label class="check-item"><input type="checkbox" value="GOODS" data-onchange="checkForm"><span>GOODS</span></label>
-              <label class="check-item"><input type="checkbox" value="EDITORIAL" data-onchange="checkForm"><span>EDITORIAL</span></label>
-              <label class="check-item"><input type="checkbox" value="ILLUSTRATION" data-onchange="checkForm"><span>ILLUSTRATION</span></label>
+              <label class="check-item"><input type="checkbox" value="GRAPHIC" name="category" data-onchange="checkForm"><span>GRAPHIC</span></label>
+              <label class="check-item"><input type="checkbox" value="GOODS" name="category" data-onchange="checkForm"><span>GOODS</span></label>
+              <label class="check-item"><input type="checkbox" value="EDITORIAL" name="category" data-onchange="checkForm"><span>EDITORIAL</span></label>
+              <label class="check-item"><input type="checkbox" value="ILLUSTRATION" name="category" data-onchange="checkForm"><span>ILLUSTRATION</span></label>
             </div>
           </div>
 
@@ -272,23 +275,23 @@
 
           <div class="form-group">
             <label for="schedule">프로젝트 일정 <span class="required">*</span></label>
-            <input type="text" id="schedule" placeholder="예: 2026년 5월 완료 목표" data-action="checkForm">
+            <input type="text" id="schedule" name="schedule" placeholder="예: 2026년 5월 완료 목표" data-action="checkForm">
           </div>
 
           <div class="form-group">
             <label for="message">프로젝트 내용 <span class="required">*</span></label>
-            <textarea id="message" rows="6" placeholder="프로젝트 개요, 방향성 등을 자유롭게 작성해 주세요." data-action="checkForm"></textarea>
+            <textarea id="message" name="message" rows="6" placeholder="프로젝트 개요, 방향성 등을 자유롭게 작성해 주세요." data-action="checkForm"></textarea>
           </div>
 
           <div class="form-group">
             <label for="attachment">참고자료 첨부</label>
-            <input type="file" id="attachment" data-onchange="checkForm">
+            <input type="file" id="attachment" name="attachment" data-onchange="checkForm">
           </div>
 
           <button class="submit-btn" id="submitBtn" disabled data-action="sendEmail">
             <span id="btnText">문의 보내기</span>
           </button>
-        </div>
+        </form>
 
         <div id="successMsg" class="success-msg" style="display:none;">
           <div class="success-icon">✓</div>
@@ -788,22 +791,44 @@ function sendEmail() {
     message:         document.getElementById('message').value
   };
 
+  // EmailJS 키 미설정 시 Netlify Forms로 직접 전송
+  if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+    const formData = new FormData();
+    formData.append('form-name', 'contact');
+    formData.append('name', params.from_name);
+    formData.append('phone', params.phone);
+    formData.append('email', params.email);
+    formData.append('category', params.category);
+    formData.append('detail_category', params.detail_category);
+    formData.append('budget', params.budget);
+    formData.append('schedule', params.schedule);
+    formData.append('message', params.message);
+    const attachFile = document.getElementById('attachment').files[0];
+    if (attachFile) formData.append('attachment', attachFile);
+
+    fetch('/', { method: 'POST', body: formData })
+      .then(() => {
+        document.getElementById('formWrap').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      })
+      .catch(() => {
+        alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        document.getElementById('btnText').textContent = '문의 보내기';
+        checkForm();
+      });
+    return;
+  }
+
   emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
     .then(() => {
       document.getElementById('formWrap').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
     })
     .catch(err => {
-      // EmailJS 키 미설정 시 mailto 폴백
-      if (!EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-        const body = `담당자: ${params.from_name}\n연락처: ${params.phone}\n이메일: ${params.email}\n의뢰분야: ${params.category}\n상세분야: ${params.detail_category}\n예산: ${params.budget}\n일정: ${params.schedule}\n\n${params.message}`;
-        window.location.href = `mailto:studio.zip.md@gmail.com?subject=[작업의뢰] ${params.from_name}님의 문의&body=${encodeURIComponent(body)}`;
-      } else {
-        alert('전송 중 오류가 발생했습니다.');
-        console.error(err);
-        document.getElementById('btnText').textContent = '문의 보내기';
-        checkForm();
-      }
+      alert('전송 중 오류가 발생했습니다.');
+      console.error(err);
+      document.getElementById('btnText').textContent = '문의 보내기';
+      checkForm();
     });
 }
 

@@ -130,6 +130,20 @@ nav::after {
 .nav-links a:hover,
 .nav-links a.active { color: var(--text); }
 
+.nav-links a[data-switch-view="contact"] {
+  letter-spacing: 0.07em;
+}
+
+/* ─── About Logo Placeholder ─── */
+.about-logo-placeholder {
+  width: 70px;
+  height: 70px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
 /* ─── Filter Bar (fixed) ─── */
 .filter-bar {
   position: fixed;
@@ -1023,6 +1037,10 @@ textarea { resize: vertical; }
   }
 
   .contact-wrapper { grid-template-columns: 1fr; gap: 40px; }
+  .form-section {
+    border-top: 1px solid #999999;
+    padding-top: 36px;
+  }
   .contact-main { padding: 40px 18px 60px; }
   .about-section h1 { font-size: 30px; }
   .form-row.two-col { grid-template-columns: 1fr; }
