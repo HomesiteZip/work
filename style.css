@@ -333,7 +333,7 @@ nav::after {
 
 /* ─── Gallery Main ─── */
 #galleryMain {
-  padding-top: calc(var(--filter-h) + 28px);
+  padding-top: calc(var(--filter-h) + 40px);
   padding-bottom: 80px;
   max-width: 1440px;
   margin: 0 auto;
@@ -343,7 +343,7 @@ nav::after {
 
 /* 배너 visible 시 갤러리 top padding 제거 */
 body:has(.original-banner.visible) #galleryMain {
-  padding-top: 28px;
+  padding-top: 10px;
 }
 
 .gallery-grid {
