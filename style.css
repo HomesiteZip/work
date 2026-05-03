@@ -453,19 +453,21 @@ body:has(.original-banner.visible) #galleryMain {
   font-size: 10px;
   letter-spacing: 0.05em;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 999px;
   font-weight: 500;
   color: var(--text);
+  background: transparent;
+  border: 1px solid #111111;
 }
 
-/* 새 카테고리 색상 세팅 (회색톤 통일) */
-.cat-badge[data-category="GOODS"] { background: #d1d5db; }
-.cat-badge[data-category="EDITORIAL"] { background: #e2e8f0; }
-.cat-badge[data-category="POSTER"] { background: #e5e7eb; }
-.cat-badge[data-category="WEB"] { background: #cbd5e1; }
-.cat-badge[data-category="SPACE"] { background: #e4e4e7; }
-.cat-badge[data-category="ILLUSTRATION"] { background: #d4d4d8; }
-.cat-badge[data-category="ORIGINAL"] { background: #e5e5e5; }
+/* 카테고리별 배경 제거 — 라인 통일 */
+.cat-badge[data-category="GOODS"],
+.cat-badge[data-category="EDITORIAL"],
+.cat-badge[data-category="POSTER"],
+.cat-badge[data-category="WEB"],
+.cat-badge[data-category="SPACE"],
+.cat-badge[data-category="ILLUSTRATION"],
+.cat-badge[data-category="ORIGINAL"] { background: transparent; }
 
 .detail-date {
   font-size: 10px;
