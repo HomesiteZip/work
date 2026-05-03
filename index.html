@@ -552,7 +552,7 @@ function buildDetailHTML(p) {
     return `<figure class="detail-figure"><img src="${b.value}" alt="${b.caption||''}"></figure>`;
   }).join('');
 
-  const yearOnly = p.date.substring(0, 4);
+  const yearDisplay = p.year === 'before2017' ? 'Before 2017' : (p.year || p.date.substring(0, 4));
   const cats = Array.isArray(p.category) ? p.category : [p.category];
   const catTags = cats.map(c => `<span class="cat-badge" data-category="${c}">${c}</span>`).join('');
 
@@ -561,7 +561,7 @@ function buildDetailHTML(p) {
       <h1 class="detail-title">${p.title}</h1>
       <div class="detail-meta">
         <div style="display: flex; gap: 6px; flex-wrap: wrap;">${catTags}</div>
-        <span class="detail-date">${yearOnly}</span>
+        <span class="detail-date">${yearDisplay}</span>
       </div>
       ${texts ? `<div class="detail-texts">${texts}</div>` : ''}
     </div>
