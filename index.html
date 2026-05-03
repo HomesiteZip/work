@@ -373,6 +373,7 @@ function switchView(viewId) {
 
   if (viewId === 'index') {
     resetFilters();
+    history.replaceState(null, '', window.location.pathname);
   }
 }
 
@@ -590,6 +591,14 @@ function openDetail(id) {
   if (!p) return;
   document.getElementById('detailContent').innerHTML = buildDetailHTML(p);
   switchView('detail');
+  history.replaceState(null, '', '#post-' + p.uuid);
+}
+
+function openDetailByUUID(uuid) {
+  const p = allProjects.find(x => x.uuid === uuid);
+  if (!p) return;
+  document.getElementById('detailContent').innerHTML = buildDetailHTML(p);
+  switchView('detail');
 }
 
 function closeDetail() {
@@ -602,7 +611,29 @@ document.addEventListener('keydown', e => {
   }
 });
 
-loadPortfolioFromSupabase();
+loadPortfolioFromSupabase().then(() => {
+  // 페이지 로드 시 URL hash 확인 → 해당 포스트 바로 열기
+  const hash = window.location.hash;
+  if (hash.startsWith('#post-')) {
+    const uuid = hash.slice(6);
+    openDetailByUUID(uuid);
+  }
+});
+
+// 브라우저 뒤로가기/앞으로가기 대응
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash;
+  if (!hash || hash === '#') {
+    // hash 없으면 홈으로
+    document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+    document.getElementById('view-index').classList.add('active');
+    window.scrollTo(0, 0);
+    resetFilters();
+  } else if (hash.startsWith('#post-')) {
+    const uuid = hash.slice(6);
+    openDetailByUUID(uuid);
+  }
+});
 
 // ───────────────────────────────────────────────
 // CONTACT JS
