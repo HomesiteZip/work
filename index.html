@@ -52,6 +52,7 @@
     <nav>
       <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
       <div class="nav-links">
+        <a href="#" data-switch-view="notice">NOTICE</a>
         <a href="#" data-switch-view="contact">CONTACT</a>
       </div>
     </nav>
@@ -180,6 +181,7 @@
     <nav>
       <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
       <div class="nav-links">
+        <a href="#" data-switch-view="notice">NOTICE</a>
         <a href="#" data-switch-view="contact">CONTACT</a>
       </div>
     </nav>
@@ -196,6 +198,7 @@
     <nav>
       <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
       <div class="nav-links">
+        <a href="#" data-switch-view="notice">NOTICE</a>
         <a href="#" data-switch-view="contact" class="active">CONTACT</a>
       </div>
     </nav>
@@ -311,6 +314,32 @@
   </main>
 </div>
 
+<!-- ================= NOTICE VIEW ================= -->
+<div id="view-notice" class="view-container">
+  <header id="siteHeaderNotice">
+    <nav>
+      <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
+      <div class="nav-links">
+        <a href="#" data-switch-view="notice" class="active">NOTICE</a>
+        <a href="#" data-switch-view="contact">CONTACT</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="notice-main">
+    <div class="notice-wrapper">
+      <div class="notice-filter-row">
+        <button class="notice-cat-btn active" data-notice-cat="">ALL</button>
+        <button class="notice-cat-btn" data-notice-cat="공지">공지</button>
+        <button class="notice-cat-btn" data-notice-cat="제작안내">제작안내</button>
+      </div>
+      <div class="notice-list" id="noticeList">
+        <div class="notice-loading">불러오는 중...</div>
+      </div>
+    </div>
+  </main>
+</div>
+
 <!-- ─── Mouse Trail Canvas ─── -->
 <canvas id="mouseTrailCanvas" class="mouse-trail"></canvas>
 
@@ -374,6 +403,11 @@ function switchView(viewId) {
   if (viewId === 'index') {
     resetFilters();
     history.replaceState(null, '', window.location.pathname);
+  } else if (viewId === 'contact') {
+    history.replaceState(null, '', '#contact');
+  } else if (viewId === 'notice') {
+    history.replaceState(null, '', '#notice');
+    loadNotices();
   }
 }
 
@@ -612,11 +646,15 @@ document.addEventListener('keydown', e => {
 });
 
 loadPortfolioFromSupabase().then(() => {
-  // 페이지 로드 시 URL hash 확인 → 해당 포스트 바로 열기
+  // 페이지 로드 시 URL hash 확인 → 해당 뷰 바로 열기
   const hash = window.location.hash;
   if (hash.startsWith('#post-')) {
     const uuid = hash.slice(6);
     openDetailByUUID(uuid);
+  } else if (hash === '#contact') {
+    switchView('contact');
+  } else if (hash === '#notice') {
+    switchView('notice');
   }
 });
 
@@ -624,7 +662,6 @@ loadPortfolioFromSupabase().then(() => {
 window.addEventListener('hashchange', () => {
   const hash = window.location.hash;
   if (!hash || hash === '#') {
-    // hash 없으면 홈으로
     document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
     document.getElementById('view-index').classList.add('active');
     window.scrollTo(0, 0);
@@ -632,7 +669,88 @@ window.addEventListener('hashchange', () => {
   } else if (hash.startsWith('#post-')) {
     const uuid = hash.slice(6);
     openDetailByUUID(uuid);
+  } else if (hash === '#contact') {
+    switchView('contact');
+  } else if (hash === '#notice') {
+    switchView('notice');
   }
+});
+
+// ───────────────────────────────────────────────
+// NOTICE JS
+// ───────────────────────────────────────────────
+let allNotices = [];
+let currentNoticeCat = '';
+let noticeLoaded = false;
+
+async function loadNotices() {
+  if (noticeLoaded) { renderNotices(); return; }
+  try {
+    const { data, error } = await _supabase
+      .from('notices')
+      .select('*')
+      .order('sort_order', { ascending: true })
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    allNotices = data ?? [];
+    noticeLoaded = true;
+    renderNotices();
+  } catch (e) {
+    document.getElementById('noticeList').innerHTML = '<div class="notice-loading">게시물을 불러오지 못했습니다.</div>';
+  }
+}
+
+function renderNotices() {
+  const list = document.getElementById('noticeList');
+  const filtered = currentNoticeCat
+    ? allNotices.filter(n => n.category === currentNoticeCat)
+    : allNotices;
+
+  if (!filtered.length) {
+    list.innerHTML = '<div class="notice-loading">게시물이 없습니다.</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map((n, i) => `
+    <div class="notice-item" data-notice-index="${i}">
+      <button class="notice-row" data-toggle-notice="${i}" aria-expanded="false">
+        <span class="notice-row-left">
+          <span class="notice-cat-tag">[${n.category}]</span>
+          <span class="notice-title">${n.title}</span>
+        </span>
+        <span class="notice-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </span>
+      </button>
+      <div class="notice-body" id="notice-body-${i}" hidden>
+        <div class="notice-content">${n.content.replace(/\n/g, '<br>')}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// 아코디언 토글
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-toggle-notice]');
+  if (!btn) return;
+  const idx = btn.dataset.toggleNotice;
+  const body = document.getElementById('notice-body-' + idx);
+  const isOpen = !body.hidden;
+  body.hidden = isOpen;
+  btn.setAttribute('aria-expanded', String(!isOpen));
+  btn.closest('.notice-item').classList.toggle('open', !isOpen);
+});
+
+// 카테고리 필터
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-notice-cat]');
+  if (!btn || !btn.classList.contains('notice-cat-btn')) return;
+  currentNoticeCat = btn.dataset.noticeCat;
+  document.querySelectorAll('.notice-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNotices();
 });
 
 // ───────────────────────────────────────────────
