@@ -428,7 +428,7 @@ body:has(.original-banner.visible) #galleryMain {
 
 /* ─── Detail Right (scrollable) ─── */
 .detail-right {
-  padding: 28px 28px 120px 28px;
+  padding: 40px 28px 120px 28px;
 }
 
 .detail-title {
