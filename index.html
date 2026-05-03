@@ -591,11 +591,11 @@ function openDetail(id) {
   if (!p) return;
   document.getElementById('detailContent').innerHTML = buildDetailHTML(p);
   switchView('detail');
-  history.replaceState(null, '', '#post-' + p.uuid);
+  history.replaceState(null, '', '#post-' + p.uuid.slice(0, 8));
 }
 
 function openDetailByUUID(uuid) {
-  const p = allProjects.find(x => x.uuid === uuid);
+  const p = allProjects.find(x => x.uuid.startsWith(uuid));
   if (!p) return;
   document.getElementById('detailContent').innerHTML = buildDetailHTML(p);
   switchView('detail');
