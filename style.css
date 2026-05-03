@@ -1088,5 +1088,10 @@ textarea { resize: vertical; }
     transition: color 0.2s;
   }
   .mobile-reset-btn:hover { color: var(--text); }
+
+  /* 모바일에서 custom-select-btn 하단선 제거 (filter-inner::after 선과 겹침 방지) */
+  .mobile-filter-row .custom-select-btn {
+    border-bottom: none;
+  }
 }
  
