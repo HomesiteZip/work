@@ -542,7 +542,7 @@ function mobileYearSelect(val, label) {
 function isMobile() { return window.innerWidth <= 768; }
 
 function buildDetailHTML(p) {
-  const texts = p.content.filter(b => b.type === 'text').map(b => `<p class="detail-text">${b.value}</p>`).join('');
+  const texts = p.content.filter(b => b.type === 'text').map(b => `<p class="detail-text">${b.value.replace(/\n/g, '<br>')}</p>`).join('');
 
   // image_layout 기반으로 single/pair 렌더링
   const imageUrls = p.content.filter(b => b.type === 'image').map(b => b.value);
