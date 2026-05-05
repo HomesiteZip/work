@@ -156,74 +156,106 @@ nav::after {
   letter-spacing: 0.02em;
 }
 
-/* ─── About Logo Placeholder ─── */
-.about-logo-placeholder {
-  width: 70px;
-  height: 70px;
-  background: var(--bg2);
-  border: 1px solid var(--border2);
-  flex-shrink: 0;
-  margin-bottom: 10px;
-}
-
-/* ─── About Card ─── */
+/* ─── About Card (Circle) ─── */
 .about-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
-.about-card {
+.about-card-wrap {
   position: relative;
-  border: 3px solid #111111;
-  padding: 36px 32px 32px;
+  display: inline-block;
+}
+
+.about-card-circle {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: #2c4198;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 10px;
-  width: 300px;
-  height: 300px;
-  background: #ffffff;
   justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 32px;
+  box-sizing: border-box;
 }
 
 .about-card-logo {
-  height: 48px;
+  height: 40px;
   width: auto;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .about-card-name {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: 0.04em;
-  color: var(--text);
+  color: #ffffff;
 }
 
 .about-card-desc {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #111111;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.85);
 }
 
 .about-card-email {
-  font-size: 16px;
-  color: #111111;
-  letter-spacing: 0.02em;
+  font-size: 11px;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.01em;
   transition: color 0.2s;
+  text-decoration: none;
+  display: block;
 }
 
-.about-card-email:hover { color: #555; }
+.about-card-email:hover { color: #ffffff; }
+
+.about-social {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 6px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 999px;
+  padding: 6px 16px;
+}
+
+.social-icon-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  padding: 4px 10px;
+  transition: color 0.2s, opacity 0.2s;
+  text-decoration: none;
+  border-bottom: none !important;
+  cursor: pointer;
+}
+
+.social-icon-link:hover {
+  color: #ffffff;
+  opacity: 0.7;
+}
+
+.blog-text {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: currentColor;
+  line-height: 1;
+}
 
 .about-card-swatches {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  top: 8px;
+  right: -18px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .about-card-swatches span {
@@ -638,32 +670,6 @@ body:has(.original-banner.visible) #galleryMain {
 }
 
 .about-links a:hover { color: var(--text); border-color: var(--text); }
-
-.about-social {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin-top: 4px;
-}
-
-.social-icon-link {
-  color: var(--text3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s;
-  border-bottom: none !important;
-}
-
-.social-icon-link:hover { color: var(--text); border-color: transparent !important; }
-
-.blog-text {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: currentColor;
-  line-height: 1;
-}
 
 /* Form */
 .form-section h2 {
