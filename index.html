@@ -887,12 +887,12 @@ const ctx = trailCanvas.getContext('2d');
 // 실제 마우스 위치 (날것)
 let mouseX = 0, mouseY = 0;
 // lerp로 부드럽게 따라가는 위치
-let smoothX = 28, smoothY = 28;
+let smoothX = 100, smoothY = 100;
 // 스무딩된 위치를 일정 간격으로 저장
 let points = [];
 const MAX_POINTS = 28;       // 트레일 길이
-const LERP = 0.15;           // 낮을수록 더 느리고 부드럽게 (0.05~0.2)
-const SAMPLE_INTERVAL = 6;  // ms 단위 샘플링 간격
+const LERP = 0.2;           // 낮을수록 더 느리고 부드럽게 (0.05~0.2)
+const SAMPLE_INTERVAL = 16;  // ms 단위 샘플링 간격
 let lastSampleTime = 0;
 
 function resizeTrailCanvas() {
