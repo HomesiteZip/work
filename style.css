@@ -170,8 +170,8 @@ nav::after {
 }
 
 .about-card-circle {
-  width: 300px;
-  height: 300px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   background: #2c4198;
   display: flex;
@@ -180,8 +180,14 @@ nav::after {
   justify-content: center;
   text-align: center;
   gap: 8px;
-  padding: 32px;
+  padding: 40px;
   box-sizing: border-box;
+  transition: background 0.2s;
+  cursor: default;
+}
+
+.about-card-circle:hover {
+  background: #8b9ccf;
 }
 
 .about-card-logo {
@@ -191,21 +197,21 @@ nav::after {
 }
 
 .about-card-name {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #ffffff;
 }
 
 .about-card-desc {
-  font-size: 13px;
+  font-size: 16px;
   line-height: 1.6;
   color: rgba(255,255,255,0.85);
 }
 
 .about-card-email {
-  font-size: 11px;
-  color: rgba(255,255,255,0.75);
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
   letter-spacing: 0.01em;
   transition: color 0.2s;
   text-decoration: none;
@@ -237,8 +243,8 @@ nav::after {
 }
 
 .social-icon-link:hover {
-  color: #ffffff;
-  opacity: 0.7;
+  color: #bfe0c3;
+  opacity: 1;
 }
 
 .blog-text {
