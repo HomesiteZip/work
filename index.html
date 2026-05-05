@@ -50,7 +50,7 @@
 <div id="view-index" class="view-container active">
   <header id="siteHeader">
     <nav>
-      <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
+      <a href="#" data-switch-view="index" class="logo"><img src="img/logo_off.png" class="logo-off" alt="SㅡZIP"><img src="img/logo_on.png" class="logo-on" alt="SㅡZIP"></a>
       <div class="nav-links">
         <a href="#" data-switch-view="notice">NOTICE</a>
         <a href="#" data-switch-view="contact">CONTACT</a>
@@ -179,7 +179,7 @@
 <div id="view-detail" class="view-container">
   <header id="siteHeaderDetail">
     <nav>
-      <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
+      <a href="#" data-switch-view="index" class="logo"><img src="img/logo_off.png" class="logo-off" alt="SㅡZIP"><img src="img/logo_on.png" class="logo-on" alt="SㅡZIP"></a>
       <div class="nav-links">
         <a href="#" data-switch-view="notice">NOTICE</a>
         <a href="#" data-switch-view="contact">CONTACT</a>
@@ -196,7 +196,7 @@
 <div id="view-contact" class="view-container">
   <header id="siteHeaderContact">
     <nav>
-      <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
+      <a href="#" data-switch-view="index" class="logo"><img src="img/logo_off.png" class="logo-off" alt="SㅡZIP"><img src="img/logo_on.png" class="logo-on" alt="SㅡZIP"></a>
       <div class="nav-links">
         <a href="#" data-switch-view="notice">NOTICE</a>
         <a href="#" data-switch-view="contact" class="active">CONTACT</a>
@@ -318,7 +318,7 @@
 <div id="view-notice" class="view-container">
   <header id="siteHeaderNotice">
     <nav>
-      <a href="#" data-switch-view="index" class="logo">SㅡZIP</a>
+      <a href="#" data-switch-view="index" class="logo"><img src="img/logo_off.png" class="logo-off" alt="SㅡZIP"><img src="img/logo_on.png" class="logo-on" alt="SㅡZIP"></a>
       <div class="nav-links">
         <a href="#" data-switch-view="notice" class="active">NOTICE</a>
         <a href="#" data-switch-view="contact">CONTACT</a>
@@ -887,7 +887,7 @@ const ctx = trailCanvas.getContext('2d');
 // 실제 마우스 위치 (날것)
 let mouseX = 0, mouseY = 0;
 // lerp로 부드럽게 따라가는 위치
-let smoothX = 500, smoothY = 600;
+let smoothX = 100, smoothY = 100;
 // 스무딩된 위치를 일정 간격으로 저장
 let points = [];
 const MAX_POINTS = 28;       // 트레일 길이

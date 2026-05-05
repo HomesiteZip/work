@@ -5,7 +5,7 @@
 /* ─── Reset & Base ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* 커스텀 마우스 커서 (화살표) */
+/* 커스텀 마우스 커서 (18px 검은색 원형) */
 * {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='30' viewBox='0 0 28 28'%3E%3Cpolygon points='4,3 4,25 21,14' fill='%232c4198' transform='rotate(0,0,0)'/%3E%3C/svg%3E") 20 8, auto !important;
 }
@@ -112,6 +112,28 @@ nav::after {
   font-weight: 600;
   letter-spacing: 0.18em;
   color: var(--text);
+  display: flex;
+  align-items: center;
+}
+
+.logo-off,
+.logo-on {
+  height: 28px;
+  width: auto;
+  display: block;
+  transition: opacity 0.2s ease;
+}
+
+.logo-on {
+  display: none;
+}
+
+.logo:hover .logo-off {
+  display: none;
+}
+
+.logo:hover .logo-on {
+  display: block;
 }
 
 .nav-links {
