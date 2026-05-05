@@ -118,7 +118,7 @@ nav::after {
 
 .logo-off,
 .logo-on {
-  height: 28px;
+  height: 22px;
   width: auto;
   display: block;
   transition: opacity 0.2s ease;
@@ -144,7 +144,7 @@ nav::after {
 
 .nav-links a {
   font-size: 18px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0em;
   color: var(--text2);
   transition: color 0.2s;
 }
