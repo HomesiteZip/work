@@ -181,12 +181,7 @@ nav::after {
   gap: 8px;
   padding: 40px;
   box-sizing: border-box;
-  transition: background 0.2s;
   cursor: default;
-}
-
-.about-card-circle:hover {
-  background: #ec6d79;
 }
 
 .about-card-logo {
@@ -222,32 +217,31 @@ nav::after {
 .about-social {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 12px;
   margin-top: 6px;
   background: rgba(255,255,255,0.15);
   border-radius: 999px;
-  padding: 6px 16px;
+  padding: 8px 18px;
 }
 
 .social-icon-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  padding: 4px 10px;
-  transition: color 0.2s, opacity 0.2s;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
   text-decoration: none;
   border-bottom: none !important;
-  cursor: pointer;
 }
 
 .social-icon-link:hover {
-  color: #bfe0c3;
-  opacity: 1;
+  color: #ec6d79;
 }
 
 .blog-text {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: currentColor;
