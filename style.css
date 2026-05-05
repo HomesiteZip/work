@@ -118,7 +118,7 @@ nav::after {
 
 .logo-off,
 .logo-on {
-  height: 28px;
+  height: 22px;
   width: auto;
   display: block;
   transition: opacity 0.2s ease;
@@ -176,7 +176,7 @@ nav::after {
 
 .about-card {
   position: relative;
-  border: 1px solid #c8c8c8;
+  border: 2px solid #111111;
   padding: 36px 32px 32px;
   display: flex;
   flex-direction: column;
@@ -184,7 +184,7 @@ nav::after {
   text-align: center;
   gap: 10px;
   width: 100%;
-  background: transparent;
+  background: #ffffff;
 }
 
 .about-card-logo {
@@ -195,25 +195,25 @@ nav::after {
 
 .about-card-name {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.04em;
   color: var(--text);
 }
 
 .about-card-desc {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.7;
-  color: var(--text2);
+  color: #111111;
 }
 
 .about-card-email {
-  font-size: 13px;
-  color: var(--text3);
+  font-size: 16px;
+  color: #111111;
   letter-spacing: 0.02em;
   transition: color 0.2s;
 }
 
-.about-card-email:hover { color: var(--text); }
+.about-card-email:hover { color: #555; }
 
 .about-card-swatches {
   position: absolute;
@@ -640,7 +640,7 @@ body:has(.original-banner.visible) #galleryMain {
 .about-social {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 30px;
   margin-top: 4px;
 }
 
@@ -654,6 +654,14 @@ body:has(.original-banner.visible) #galleryMain {
 }
 
 .social-icon-link:hover { color: var(--text); border-color: transparent !important; }
+
+.blog-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: currentColor;
+  line-height: 1;
+}
 
 /* Form */
 .form-section h2 {
