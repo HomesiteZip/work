@@ -5,9 +5,9 @@
 /* ─── Reset & Base ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* 커스텀 마우스 커서 (18px 검은색 원형) */
+/* 커스텀 마우스 커서 (화살표) */
 * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpolygon points='4,3 4,25 21,14' fill='%232c4198' transform='rotate(-30,12,14)'/%3E%3C/svg%3E") 20 8, auto !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='30' viewBox='0 0 28 28'%3E%3Cpolygon points='4,3 4,25 21,14' fill='%232c4198' transform='rotate(0,0,0)'/%3E%3C/svg%3E") 20 8, auto !important;
 }
 
 :root {
