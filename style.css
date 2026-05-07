@@ -7,7 +7,7 @@
 
 /* 커스텀 마우스 커서 (18px 검은색 원형) */
 * {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpolygon points='3,3 3,26 26,3' fill='%232c4198'/%3E%3C/svg%3E") 3 3, auto !important;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='30' viewBox='0 0 26 30'%3E%3Cpolygon points='3,3 3,27 23,3' fill='%232c4198'/%3E%3C/svg%3E") 3 3, auto !important;
 }
 
 :root {
