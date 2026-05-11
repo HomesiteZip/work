@@ -430,7 +430,7 @@ nav::after {
   color: #111111;
   text-decoration: none;
   font-family: var(--font-sans);
-  font-size: 18px;
+  font-size: 21px;
   letter-spacing: -0.03em;
   margin-top: 10px;
   margin-bottom: 24px;
@@ -579,11 +579,13 @@ nav::after {
 .cat-badge[data-category="ORIGINAL"] { background: transparent; }
 
 /* 상세 페이지 카테고리 뱃지 — 클릭 가능 */
-.detail-cat-badge {
+.detail-cat-badge,
+.gallery-cat-badge {
   cursor: pointer;
   transition: background 0.18s, color 0.18s;
 }
-.detail-cat-badge:hover {
+.detail-cat-badge:hover,
+.gallery-cat-badge:hover {
   background: #111111;
   color: #ffffff;
 }
