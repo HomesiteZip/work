@@ -405,6 +405,8 @@ function switchView(viewId) {
   // 플로팅 뒤로가기 버튼: detail 뷰일 때만 표시
   const floatBtn = document.getElementById('floatBackBtn');
   if (floatBtn) floatBtn.classList.toggle('visible', viewId === 'detail');
+const igFloat = document.querySelector('.instagram-float');
+if (igFloat) igFloat.style.display = viewId === 'detail' ? 'none' : 'flex';
 
   if (viewId === 'index') {
     resetFilters();
