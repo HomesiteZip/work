@@ -1342,11 +1342,13 @@ textarea { resize: vertical; }
 }
 .instagram-float svg {
   fill: #9ca3af;
+  width: 39px;
+  height: 39px;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
   transition: fill 0.2s ease, filter 0.2s ease;
 }
 .instagram-float:hover svg,
 .instagram-float:active svg {
-  fill: url(#igGradient);
-  filter: drop-shadow(0 3px 8px rgba(214, 36, 159, 0.35));
+  fill: #2B4198;
+  filter: drop-shadow(0 3px 8px rgba(43, 65, 152, 0.35));
 }
